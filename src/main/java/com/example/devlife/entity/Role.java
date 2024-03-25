@@ -1,4 +1,4 @@
-package com.example.techlife.entity;
+package com.example.devlife.entity;
 
 public enum Role {
     USER, ADMIN

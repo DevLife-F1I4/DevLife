@@ -1,4 +1,4 @@
-package com.example.techlife.entity;
+package com.example.devlife.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

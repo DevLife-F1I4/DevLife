@@ -1,4 +1,4 @@
-package com.example.techlife.entity;
+package com.example.devlife.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,34 +8,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Table(name = "board")
+@Table(name = "comment")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
-public class Board {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
-
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "hit", nullable = false)
-    private int hit;
-
-    @Column(name = "like", nullable = false)
-    private int like;
-
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    @Column(name = "parent_id", updatable = false)
+    private Long parentId;
 
     @CreatedDate
     @Column(name = "created_at")

@@ -1,4 +1,4 @@
-package com.example.techlife.entity;
+package com.example.devlife.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,39 +8,34 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Table(name = "user")
+@Table(name = "board")
 @Builder
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Entity
-public class User {
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "provider_id", nullable = false, unique = true)
-    private String providerId;
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "nickname", length = 10, nullable = false, unique = true)
-    private String nickname;
+    @Column(name = "content", nullable = false)
+    private String content;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "hit", nullable = false)
+    private int hit;
 
-    @Column(name = "grade", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Grade grade;
+    @Column(name = "like", nullable = false)
+    private int like;
 
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @Column(name = "withdraw", nullable = false)
-    private boolean withdraw;
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
 
     @CreatedDate
     @Column(name = "created_at")
@@ -49,4 +44,5 @@ public class User {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }
