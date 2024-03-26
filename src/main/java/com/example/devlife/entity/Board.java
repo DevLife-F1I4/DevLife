@@ -19,7 +19,7 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
+    @Column(name = "board_id", updatable = false)
     private Long id;
 
     @Column(name = "title", nullable = false)
@@ -31,8 +31,8 @@ public class Board {
     @Column(name = "hit", nullable = false)
     private int hit;
 
-    @Column(name = "like", nullable = false)
-    private int like;
+    @Column(name = "board_like", nullable = false)
+    private int boardLike;
 
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
@@ -45,4 +45,7 @@ public class Board {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
