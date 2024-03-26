@@ -13,4 +13,4 @@ sudo docker pull soogoori99/devlife:latest
 docker run -d -p 8080:8080 --env-file=env_list.txt --name app soogoori99/devlife:latest
 
 # 사용하지 않는 불필요한 이미지(=dangling 이미지) 삭제
-#docker rmi -f $(docker images -f "dangling=true" -q) || true
+docker rmi -f $(docker images -f "dangling=true" -q) || true
