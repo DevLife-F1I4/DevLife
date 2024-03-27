@@ -1,11 +1,16 @@
 package com.example.devlife.config;
 
+import com.example.devlife.security.JwtAccessDeniedHandler;
+import com.example.devlife.security.JwtAuthenticationEntryPoint;
+import com.example.devlife.security.JwtAuthenticationFilter;
+import com.example.devlife.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,10 +26,10 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    @Bean
+    /*@Bean
     public WebSecurityCustomizer configure() {      // 스프링 시큐리티 기능 비활성화
         return web -> web.ignoring().requestMatchers();
-    }
+    }*/
 
     // 특정 HTTP 요청에 대한 웹 기반 보안 구성
     @Bean
@@ -55,13 +60,13 @@ public class SecurityConfig {
 
                 // exception 처리
                 .exceptionHandling(authenticationManager -> authenticationManager
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 인증이 실패했을 때 호출 -> 인증되지 않은 사용자가 보호된 리소스에 접근
-                        .accessDeniedHandler(jwtAccessDeniedHandler)) // 접근 거부가 발생했을 때 호출 -> 인증된 사용자가 해당 리소스에 권한 X
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint) // 인증 실패했을 때 호출 -> 인증되지 않은 사용자가 보호된 리소스에 접근
+                        .accessDeniedHandler(jwtAccessDeniedHandler)) // 인가 실패했을 때 (접근거부) 호출 -> 인증된 사용자가 해당 리소스에 권한 X
 
                 // JWT filter 적용
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
 
-                .csrf(auth -> auth.disable()); // csrf 비활성화
+                .csrf(AbstractHttpConfigurer::disable); // csrf 비활성화
 
         return httpSecurity.build();
     }
