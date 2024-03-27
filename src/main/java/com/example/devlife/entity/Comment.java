@@ -32,15 +32,21 @@ public class Comment {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "depth", updatable = false)
+    private Long depth;
+
+    @Column(name = "order", updatable = false)
+    private Long order;
+
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
 }
