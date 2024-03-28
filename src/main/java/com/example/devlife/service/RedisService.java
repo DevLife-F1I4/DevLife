@@ -21,7 +21,7 @@ public class RedisService {
 
     // 토큰 만료되면 자동 삭제
     @Transactional
-    public void setValuesWithTimeout(String key, String value, long timeout){
+    public void setValuesWithTimeout(String key, String value, Long timeout){
         redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
     }
 

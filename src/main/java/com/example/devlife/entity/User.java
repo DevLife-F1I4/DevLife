@@ -1,5 +1,6 @@
 package com.example.devlife.entity;
 
+import com.example.devlife.dto.AuthDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -49,4 +50,5 @@ public class User {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }

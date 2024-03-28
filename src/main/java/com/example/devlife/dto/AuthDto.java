@@ -1,5 +1,6 @@
 package com.example.devlife.dto;
 
+import com.example.devlife.entity.Grade;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,20 +23,25 @@ public class AuthDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class SignupDto {
+    public static class SignUpDto {
         private String providerId;
         private String password;
+        private String nickname;
+        private Grade grade;
 
         @Builder
-        public SignupDto(String providerId, String password) {
+        public SignUpDto(String providerId, String password, String nickname) {
             this.providerId = providerId;
             this.password = password;
+            this.nickname=nickname;
+            this.grade= Grade.F1;
         }
 
-        public static SignupDto encodePassword(SignupDto signupDto, String encodedPassword) {
-            SignupDto newSignupDto = new SignupDto();
-            newSignupDto.providerId = signupDto.getProviderId();
+        public static SignUpDto encodePassword(SignUpDto signUpDto, String encodedPassword) {
+            SignUpDto newSignupDto = new SignUpDto();
+            newSignupDto.providerId = signUpDto.getProviderId();
             newSignupDto.password = encodedPassword;
+            newSignupDto.nickname= signUpDto.getNickname();
             return newSignupDto;
         }
     }

@@ -7,21 +7,24 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.security.SignatureException;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static io.jsonwebtoken.Jwts.*;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtTokenProvider {
+public class JwtTokenProvider implements InitializingBean {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final RedisService redisService;
@@ -29,26 +32,33 @@ public class JwtTokenProvider {
     private static final String PROVIDER_ID_KEY = "providerId";
     private static final String url = "https://localhost:8080";
 
-    @Value("${spring.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secretKey;
 
     private static Key signingKey;
 
-    @Value("${spring.jwt.token.access-expiration-time}")
+    @Value("${jwt.access-expiration-time}")
     private Long accessExpirationTime;
 
-    @Value("${spring.jwt.token.refresh-expiration-time}")
+    @Value("${jwt.refresh-expiration-time}")
     private Long refreshExpirationTime;
 
 
     // 시크릿 키 설정
+    @Override
     public void afterPropertiesSet() throws Exception {
         byte[] secretKeyBytes = Decoders.BASE64.decode(secretKey);
         signingKey = Keys.hmacShaKeyFor(secretKeyBytes);
     }
 
     /* == Access Token & Refresh Token 생성 == */
-    public AuthDto.TokenDto createToken(String providerId, String authorities){
+    public AuthDto.TokenDto createToken(String providerId,Authentication authentication){
+
+        // 권한 가져오기
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
         Long now = System.currentTimeMillis();
 
         String accessToken = Jwts.builder()
