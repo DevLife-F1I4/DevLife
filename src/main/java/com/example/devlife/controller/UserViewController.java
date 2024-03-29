@@ -25,4 +25,9 @@ public class UserViewController {
     public String signup() {
         return "signup";
     }
+
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "mypage";
+    }
 }

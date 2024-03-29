@@ -34,20 +34,21 @@
 
     <main>
         <h2> 로그인</h2>
-        <form th:action="@{/login}" method="POST">
+        <form class="login-form">
             <div class="field-row-stacked">
-                    <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
-                        <label for="text22">ID</label>
-                        <input id="text22" type="text" name="providerId"/>
+            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+                <label for="providerId">ID</label>
+                <input id="providerId" type="text" name="providerId"/>
             </div>
             <div class="field-row-stacked">
-                <label for="text23">Password</label>
-                <input id="text23" type="password" name="password"/>
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password"/>
             </div>
-            <button type="submit">로그인</button>
+            <button class="login-btn">로그인</button>
         </form>
-            <button type="button" class="btn btn-secondary mt-3" onclick="location.href='/signup'">회원가입</button>
+            <button class="signup-btn" onclick="location.href='/signup'">회원가입</button>
     </main>
+    <script th:src="@{/js/login.js}"></script>
 
 
 

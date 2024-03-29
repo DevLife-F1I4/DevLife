@@ -1,6 +1,8 @@
 package com.example.devlife.controller;
 
 import com.example.devlife.dto.AuthDto;
+import com.example.devlife.dto.UserDto;
+import com.example.devlife.entity.User;
 import com.example.devlife.service.AuthService;
 import com.example.devlife.service.user.UserService;
 import jakarta.validation.Valid;
@@ -19,9 +21,8 @@ public class AuthApiController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody @Valid AuthDto.SignUpDto signUpDto) {
-        userService.signUp(signUpDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<UserDto.UserResponse> signUp(@RequestBody @Valid AuthDto.SignUpDto signUpDto) {
+        return ResponseEntity.ok(userService.signUp(signUpDto));
     }
 
     // 로그인

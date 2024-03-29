@@ -35,8 +35,8 @@ public class Comment {
     @Column(name = "depth", updatable = false)
     private Long depth;
 
-    @Column(name = "order", updatable = false)
-    private Long order;
+    @Column(name = "orders", updatable = false)
+    private Long orders;
 
     @LastModifiedDate
     @Column(name = "updated_at")

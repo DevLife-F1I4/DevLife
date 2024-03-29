@@ -1,6 +1,7 @@
 package com.example.devlife.service.user;
 
 import com.example.devlife.dto.AuthDto;
+import com.example.devlife.dto.UserDto;
 import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.Role;
 import com.example.devlife.entity.User;
@@ -26,7 +27,7 @@ public class UserService {
      * @param signupDto
      */
     @Transactional
-    public void signUp(AuthDto.SignUpDto signupDto) {
+    public UserDto.UserResponse signUp(AuthDto.SignUpDto signupDto) {
 
         // TODO : 아이디 및 닉네임 중복 예외처리 정리하기
 
@@ -46,5 +47,7 @@ public class UserService {
                 .role(Role.USER)
                 .build();
         userRepository.save(user);
+
+        return UserDto.UserResponse.from(user);
     }
 }
