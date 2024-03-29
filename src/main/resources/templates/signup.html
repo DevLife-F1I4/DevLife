@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+    <aside>
+        <ul class="tree-view">
+            <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
+            <li style="font-weight: bold">
+                <a href="#components" >Category</a>
+                <ul>
+                    <li><a th:href="@{/mypage}">마이페이지</a></li>
+                    <li><a th:href="@{/login}">로그인</a></li>
+                    <li><a th:href="@{/signup}">회원가입</a></li>
+                    <li>
+                        <a href="#window">게시판</a>
+                        <ul>
+                            <li><a href="#title-bar">개발자 도구</a></li>
+                            <li><a href="#window-contents">개발자네 개팔자</a></li>
+                            <li><a href="#status-bar">고독한 개발자</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <h2> 회원가입</h2>
+        <form th:action="@{/signup}" method="POST">
+            <!-- 토큰을 추가하여 CSRF 공격 방지 -->
+            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+        <div class="field-row-stacked">
+            <label for="providerId">ID</label>
+            <input id="providerId" type="text" name="providerId"/>
+        </div>
+        <div class="field-row-stacked">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password"/>
+        </div>
+        <div class="field-row-stacked">
+            <label for="nickname">Nickname</label>
+            <input id="nickname" type="text" name="nickname"/>
+        </div>
+
+        <button id="signup-btn" type="submit">회원가입</button>
+        </form>
+    </main>
+
+    <script src="/js/login.js" th:src="@{/js/login.js}"></script>
+</body>
+</html> 
