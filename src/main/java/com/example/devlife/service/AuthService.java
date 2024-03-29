@@ -114,6 +114,12 @@ public class AuthService {
         return null;
     }
 
+    // AT가 만료일자만 초과한 유효한 토큰인지 검사
+    public boolean validate(String requestAccessTokenInHeader) {
+        String requestAccessToken = resolveToken(requestAccessTokenInHeader);
+        return jwtTokenProvider.validateAccessTokenOnlyExpired(requestAccessToken); // true = 재발급
+    }
+
     /**
      * 로그아웃
      */
