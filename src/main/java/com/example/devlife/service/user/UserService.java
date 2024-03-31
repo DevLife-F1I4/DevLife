@@ -5,19 +5,19 @@ import com.example.devlife.dto.UserDto;
 import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.Role;
 import com.example.devlife.entity.User;
+import com.example.devlife.exception.DuplicateIdException;
+import com.example.devlife.exception.DuplicateNicknameException;
+import com.example.devlife.exception.UserNotFoundException;
 import com.example.devlife.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -31,13 +31,8 @@ public class UserService {
 
         // TODO : 아이디 및 닉네임 중복 예외처리 정리하기
 
-        if(userRepository.existsByProviderId(signupDto.getProviderId())){
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다");
-        }
-
-        if (userRepository.existsByNickname(signupDto.getNickname())) {
-            throw new IllegalArgumentException("이미 존재하는 아이디입니다");
-        }
+        validateDuplicateId(signupDto.getProviderId());
+        validateDuplicateNickname(signupDto.getNickname());
 
         User user = User.builder()
                 .providerId(signupDto.getProviderId())
@@ -49,5 +44,40 @@ public class UserService {
         userRepository.save(user);
 
         return UserDto.UserResponse.from(user);
+    }
+
+    /**
+     * 유저 정보 수정
+     */
+    @Transactional
+    public void updateUserInfo(String id, UserDto.UserRequest requestDto) throws UserNotFoundException{
+        User user = userRepository.findByProviderId(id);
+        if(user==null) throw new UserNotFoundException();
+        validateDuplicateNickname(requestDto.getNickname());
+        user.update(requestDto.getNickname());
+    }
+
+    public void validateDuplicateId(String id) {
+        if (userRepository.existsByProviderId(id)) {
+            throw new DuplicateIdException();
+        }
+    }
+
+    public void validateDuplicateNickname(String nickname) {
+        if (userRepository.existsByNickname(nickname)) {
+            throw new DuplicateNicknameException();
+        }
+    }
+
+    /**
+     * 유저 등업
+     */
+    @Transactional
+    public void updateGrade(Long id){
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        Grade currentGrade = user.getGrade();
+        int newValue = currentGrade.getValue() + 1;
+        if(newValue<=2) currentGrade.updateValue(newValue);
+        user.updateGrade(currentGrade);
     }
 }

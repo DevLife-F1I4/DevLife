@@ -87,7 +87,7 @@ public class AuthApiController {
         }
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/user/logout")
     public ResponseEntity<?> logOut(@RequestHeader("Authorization") String requestAccessToken) {
         authService.logOut(requestAccessToken);
         ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")

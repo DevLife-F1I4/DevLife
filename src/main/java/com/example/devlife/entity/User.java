@@ -51,4 +51,12 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+
+    public void update(String nickname) {
+        this.nickname=nickname;
+    }
+
+    public void updateGrade(Grade grade){
+        this.grade=grade;
+    }
 }

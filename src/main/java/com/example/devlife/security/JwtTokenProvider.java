@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -99,8 +100,8 @@ public class JwtTokenProvider implements InitializingBean {
     // 토큰으로부터 클레임 만들고 (getClaims(token)) -> 이를 통해 User 객체 생성해 Authentication 객체 반환
     public Authentication getAuthentication(String token) {
         String providerId = getClaims(token).get(PROVIDER_ID_KEY).toString();
-        UserDetailsImpl userDetailsImpl = userDetailsService.loadUserByUsername(providerId);
-        return new UsernamePasswordAuthenticationToken(userDetailsImpl, "", userDetailsImpl.getAuthorities());
+        UserDetails userDetailsImpl = userDetailsService.loadUserByUsername(providerId);
+        return new UsernamePasswordAuthenticationToken(userDetailsImpl, token, userDetailsImpl.getAuthorities());
     }
 
     public long getTokenExpirationTime(String token) {

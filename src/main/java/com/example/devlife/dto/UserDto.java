@@ -24,4 +24,18 @@ public class UserDto {
                     user.getGrade());
         }
     }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class UserRequest{
+        private String nickname;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class LoginUser{
+        private Long id;
+    }
 }

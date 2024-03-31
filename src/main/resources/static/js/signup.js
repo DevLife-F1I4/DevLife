@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const idRegex = /^[a-zA-Z0-9]{5,10}$/;
         if (!idRegex.test(providerId)) {
-            alert('5 ~ 10자 영문, 숫자 조합하세요');
+            alert('아이디는 5 ~ 10자 영문, 숫자를 조합하세요');
             return;
         }
 
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
         if (!passwordRegex.test(password)) {
             alert(
-                '8 ~ 16자 영문, 숫자 조합하세요');
+                '비밀번호에 8 ~ 16자 영문, 숫자를 조합하세요');
             return;
         }
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const nicknameRegex = /^[a-zA-Zㄱ-힣]{3,10}$/;
         if (!nicknameRegex.test(nickname)) {
             alert(
-                '3 ~ 10자 한글 또는 영어로 입력하세요');
+                '닉네임은 3 ~ 10자 한글 또는 영어로 입력하세요');
             return;
         }
 

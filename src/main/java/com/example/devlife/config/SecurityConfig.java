@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @RequiredArgsConstructor
@@ -45,11 +46,12 @@ public class SecurityConfig {
 
                 // 인증, 인가 설정
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/login", "/signup", "/css/**",
-                                        "/js/**",
-                                        "/api/login", "/api/signup", "/main",
+                        auth.requestMatchers("/login", "/signup", "/main",
+                                        "/css/**", "/js/**",
+                                        "/api/login", "/api/signup",
                                         "/swagger-ui/**", "/api-docs/swagger-config").permitAll() // 인증 없이 접근 허용
                                 .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN만 접근 가능
+                                .requestMatchers("/api/user/**").hasRole("USER")
                                 .anyRequest().authenticated())
 
                 // 로그인
@@ -57,7 +59,9 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/main"))            // 로그인 성공 시 redirect url
 
                 // 로그아웃
-                .logout(auth -> auth.logoutSuccessUrl("/login") // 로그아웃 후 redirect url
+                .logout(auth -> auth
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                        .logoutSuccessUrl("/main") // 로그아웃 후 redirect url
                         .invalidateHttpSession(true))           // 세션 무효화
 
                 // exception 처리
