@@ -1,0 +1,39 @@
+body {
+    
+    margin: 0;
+    padding: 0;
+    background: #c0c0c0;
+  }
+
+aside {
+    width: 200px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding: 8px;
+    display: flex;
+    align-items: stretch;
+  }
+  
+aside .tree-view {
+    width: 100%;
+    /* TODO: Move scrollbar into the recessed region? */
+    overflow-y: scroll;
+}
+
+main{
+    margin-left: 540px;
+    margin-bottom: 60px;
+}
+.field-row-stacked{
+    height: 100px;
+}
+
+.field-row-stacked input{
+    width: 300px;
+    height: 30px;
+}
+
+.button{
+    margin:auto;
+}
