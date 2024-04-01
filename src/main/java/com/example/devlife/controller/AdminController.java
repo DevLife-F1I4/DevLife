@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import com.example.devlife.dto.UpdateCommentRequest;
+import com.example.devlife.dto.UpdateUserGradeRequest;
 import com.example.devlife.entity.User;
 import com.example.devlife.service.admin.AdminService;
 
@@ -31,5 +34,11 @@ public class AdminController {
 		return ResponseEntity.ok().body(user);
 	}
 
-
+	@PatchMapping("/api/admin/user/{providerId}")
+	public ResponseEntity<User> updateUserGrade(@PathVariable(value = "providerId") String providerId, @RequestBody
+	UpdateUserGradeRequest request){
+		//TODO 1. 관리자 권한 여부 확인
+		User user = adminService.updateUserGrade(providerId, request);
+		return ResponseEntity.ok().body(user);
+	}
 }
