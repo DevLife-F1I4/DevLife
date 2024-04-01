@@ -22,23 +22,26 @@ public class Board {
     @Column(name = "board_id", updatable = false)
     private Long id;
 
+    @Column(name = "category", nullable = false)
+    private Category category;
+
     @Column(name = "title", nullable = false)
     private String title;
 
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "hit", nullable = false)
+    @Column(name = "hit", columnDefinition = "integer default 0", nullable = false)
     private int hit;
 
-    @Column(name = "board_like", nullable = false)
+    @Column(name = "board_like", columnDefinition = "integer default 0",nullable = false)
     private int boardLike;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url"/* , nullable = false */)
     private String imageUrl;
 
     @CreatedDate
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
