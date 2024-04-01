@@ -54,4 +54,8 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Comment> commentList;
+
+    public void withdrawUser(boolean flag){
+        this.withdraw = flag;
+    }
 }
