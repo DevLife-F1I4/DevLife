@@ -45,14 +45,16 @@ public class AdminController {
 	}
 
 	@DeleteMapping("/comment/{commentId}")
-	public void deleteComment(@PathVariable(value = "commentId") Long commentId){
+	public ResponseEntity<Void> deleteComment(@PathVariable(value = "commentId") Long commentId){
 		//TODO 1. 관리자 권한 여부 확인
 		adminService.deleteComment(commentId);
+		return ResponseEntity.ok().body(null);
 	}
 
 	@DeleteMapping("/board/{boardId}")
-	public void deleteBoard(@PathVariable(value = "boardId") Long boardId){
+	public ResponseEntity<Void> deleteBoard(@PathVariable(value = "boardId") Long boardId){
 		//TODO 1. 관리자 권한 여부 확인
 		adminService.deleteBoard(boardId);
+		return ResponseEntity.ok().body(null);
 	}
 }
