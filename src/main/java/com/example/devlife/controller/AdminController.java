@@ -49,5 +49,9 @@ public class AdminController {
 		adminService.deleteComment(commentId);
 	}
 
-
+	@DeleteMapping("/board/{boardId}")
+	public void deleteBoard(@PathVariable(value = "boardId") Long boardId){
+		//TODO 1. 관리자 권한 여부 확인
+		adminService.deleteBoard(boardId);
+	}
 }

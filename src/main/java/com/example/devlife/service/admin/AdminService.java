@@ -44,4 +44,8 @@ public class AdminService {
 	public void deleteComment(Long commentId){
 		commentRepository.deleteById(commentId);
 	}
+
+	public void deleteBoard(Long boardId){
+		boardRepository.deleteById(boardId);
+	}
 }
