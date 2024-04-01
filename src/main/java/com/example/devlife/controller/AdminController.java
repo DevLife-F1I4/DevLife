@@ -23,9 +23,10 @@ public class AdminController {
 
 
 	@DeleteMapping("/user/{providerId}")
-	public void deleteUser(@PathVariable(value = "providerId") String providerId) {
+	public ResponseEntity<Void> deleteUser(@PathVariable(value = "providerId") String providerId) {
 		//TODO 1. 관리자인지 확인
 		adminService.deleteUser(providerId);
+		return ResponseEntity.ok().body(null);
 	}
 
 	@GetMapping("/user/{providerId}")
