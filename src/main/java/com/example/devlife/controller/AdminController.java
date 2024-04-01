@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.devlife.entity.User;
@@ -21,6 +22,13 @@ public class AdminController {
 	public void deleteUser(@PathVariable(value = "providerId") String providerId) {
 		//TODO 1. 관리자인지 확인
 		adminService.delete(providerId);
+	}
+
+	@GetMapping("/api/admin/user/{providerId}")
+	public ResponseEntity<User> getUserInfo(@PathVariable(value = "providerId") String providerId){
+		//TODO 1. 관리자 권한 여부 확인
+		User user = adminService.getUser(providerId);
+		return ResponseEntity.ok().body(user);
 	}
 
 

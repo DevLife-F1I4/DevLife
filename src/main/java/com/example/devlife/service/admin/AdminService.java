@@ -24,4 +24,10 @@ public class AdminService {
 			.orElseThrow(() -> new IllegalArgumentException("not found: " + providerId));
 		user.withdrawUser(true);
 	}
+
+	public User getUser(String providerId){
+		User user = userRepository.findByProviderId(providerId)
+			.orElseThrow(() -> new IllegalArgumentException("not found: " + providerId));
+		return user;
+	}
 }
