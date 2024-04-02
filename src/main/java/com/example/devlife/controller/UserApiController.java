@@ -39,14 +39,7 @@ public class UserApiController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * 아이디 중복 여부 확인
-     */
 
-
-    /**
-     * 닉네임 중복 여부 확인
-     */
 
     /**
      * 내가 작성한 글 조회

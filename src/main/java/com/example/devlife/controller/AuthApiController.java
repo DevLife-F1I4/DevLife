@@ -24,6 +24,22 @@ public class AuthApiController {
         return ResponseEntity.ok(userService.signUp(signUpDto));
     }
 
+    /**
+     * 아이디 중복 여부 확인
+     */
+    @PostMapping("/signup/checkId")
+    public ResponseEntity<Boolean> checkId(@RequestBody UserInfoDto.UserIdRequest idRequest) {
+        return ResponseEntity.ok(userService.validateDuplicateId(idRequest.getProviderId()));
+    }
+
+    /**
+     * 닉네임 중복 여부 확인
+     */
+    @PostMapping("/signup/checkNickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestBody UserInfoDto.UserRequest nickname) {
+        return ResponseEntity.ok(userService.validateDuplicateNickname(nickname.getNickname()));
+    }
+
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthDto.LoginDto loginDto) {

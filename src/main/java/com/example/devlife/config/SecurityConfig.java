@@ -48,7 +48,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/login", "/signup", "/main", "/mypage",
                                         "/css/**", "/js/**",
-                                        "/api/login", "/api/signup",
+                                        "/api/login", "/api/signup/**",
                                         "/swagger-ui/**", "/api-docs/swagger-config").permitAll() // 인증 없이 접근 허용
                                 .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN만 접근 가능
                                 .requestMatchers("/api/user/**").hasRole("USER")

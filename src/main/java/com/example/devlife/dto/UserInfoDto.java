@@ -46,6 +46,13 @@ public class UserInfoDto {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
+    public static class UserIdRequest{
+        private String providerId;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LoginUser{
         private Long id;
     }

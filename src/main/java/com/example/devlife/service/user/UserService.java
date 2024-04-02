@@ -31,8 +31,10 @@ public class UserService {
 
         // TODO : 아이디 및 닉네임 중복 예외처리 정리하기
 
-        validateDuplicateId(signupDto.getProviderId());
-        validateDuplicateNickname(signupDto.getNickname());
+        boolean checkId = validateDuplicateId(signupDto.getProviderId());
+        boolean checkNickname = validateDuplicateNickname(signupDto.getNickname());
+
+        if(!checkId || !checkNickname) throw new RuntimeException();
 
         User user = User.builder()
                 .providerId(signupDto.getProviderId())
@@ -66,16 +68,22 @@ public class UserService {
         user.update(requestDto.getNickname());
     }
 
-    public void validateDuplicateId(String id) {
-        if (userRepository.existsByProviderId(id)) {
-            throw new DuplicateIdException();
+    public boolean validateDuplicateId(String providerId) {
+        if (providerId.equals("")) {
+            throw new IllegalArgumentException("ID cannot be blank");
         }
+        if (userRepository.existsByProviderId(providerId)) {
+            throw new DuplicateIdException();
+        }else return true;
     }
 
-    public void validateDuplicateNickname(String nickname) {
+    public boolean validateDuplicateNickname(String nickname) {
+        if (nickname.equals("")) {
+            throw new IllegalArgumentException("nickname cannot be blank");
+        }
         if (userRepository.existsByNickname(nickname)) {
             throw new DuplicateNicknameException();
-        }
+        }else return true;
     }
 
     /**
