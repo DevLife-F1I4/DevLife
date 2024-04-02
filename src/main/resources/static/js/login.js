@@ -1,4 +1,4 @@
-// 로그 기능
+// 로그인 기능
 document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.querySelector('.login-form');
     signupForm.addEventListener('submit', function (event) {

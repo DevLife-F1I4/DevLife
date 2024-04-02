@@ -3,11 +3,11 @@ package com.example.devlife.dto;
 import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-public class UserDto {
+public class UserInfoDto {
 
     @Getter
     @NoArgsConstructor
@@ -23,6 +23,17 @@ public class UserDto {
                     user.getNickname(),
                     user.getGrade());
         }
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserBoardResponse{
+        private String providerId;
+        private String nickname;
+        private Grade grade;
+
     }
 
     @Getter

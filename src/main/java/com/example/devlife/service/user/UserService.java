@@ -1,7 +1,7 @@
 package com.example.devlife.service.user;
 
 import com.example.devlife.dto.AuthDto;
-import com.example.devlife.dto.UserDto;
+import com.example.devlife.dto.UserInfoDto;
 import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.Role;
 import com.example.devlife.entity.User;
@@ -27,7 +27,7 @@ public class UserService {
      * @param signupDto
      */
     @Transactional
-    public UserDto.UserResponse signUp(AuthDto.SignUpDto signupDto) {
+    public UserInfoDto.UserResponse signUp(AuthDto.SignUpDto signupDto) {
 
         // TODO : 아이디 및 닉네임 중복 예외처리 정리하기
 
@@ -43,14 +43,23 @@ public class UserService {
                 .build();
         userRepository.save(user);
 
-        return UserDto.UserResponse.from(user);
+        return UserInfoDto.UserResponse.from(user);
     }
 
+    /**
+     * 유저 정보 조회
+     */
+    @Transactional(readOnly = true)
+    public UserInfoDto.UserResponse getUserInfo(String id) throws UserNotFoundException{
+        User user = userRepository.findByProviderId(id);
+        if(user==null) throw new UserNotFoundException();
+        return UserInfoDto.UserResponse.from(user);
+    }
     /**
      * 유저 정보 수정
      */
     @Transactional
-    public void updateUserInfo(String id, UserDto.UserRequest requestDto) throws UserNotFoundException{
+    public void updateUserInfo(String id, UserInfoDto.UserRequest requestDto) throws UserNotFoundException{
         User user = userRepository.findByProviderId(id);
         if(user==null) throw new UserNotFoundException();
         validateDuplicateNickname(requestDto.getNickname());
@@ -80,4 +89,7 @@ public class UserService {
         if(newValue<=2) currentGrade.updateValue(newValue);
         user.updateGrade(currentGrade);
     }
+
+
+
 }

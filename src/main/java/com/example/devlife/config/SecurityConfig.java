@@ -46,7 +46,7 @@ public class SecurityConfig {
 
                 // 인증, 인가 설정
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/login", "/signup", "/main",
+                        auth.requestMatchers("/login", "/signup", "/main", "/mypage",
                                         "/css/**", "/js/**",
                                         "/api/login", "/api/signup",
                                         "/swagger-ui/**", "/api-docs/swagger-config").permitAll() // 인증 없이 접근 허용

@@ -2,8 +2,8 @@ function sendRequestToOtherPage() {
     var token = localStorage.getItem('accessToken');
 
     if (token) { // 토큰이 존재할 때만 헤더에 추가하여 요청 보내기
-        console.log("메인페이지 " + token)
-        fetch('/main', {
+        console.log("마이페이지 " + token)
+        fetch('/mypage', {
             headers: {
                 Authorization: token
             }
