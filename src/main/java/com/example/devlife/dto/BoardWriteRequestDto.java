@@ -6,12 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewBoardRequestDto {
+public class BoardWriteRequestDto {
     private Category category;
     private String title;
     private String content;
