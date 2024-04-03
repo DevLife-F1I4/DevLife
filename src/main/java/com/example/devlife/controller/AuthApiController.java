@@ -4,7 +4,9 @@ import com.example.devlife.dto.AuthDto;
 import com.example.devlife.dto.UserInfoDto;
 import com.example.devlife.service.AuthService;
 import com.example.devlife.service.user.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -51,6 +53,7 @@ public class AuthApiController {
                 .maxAge(COOKIE_EXPIRATION)
                 .httpOnly(true)
                 .secure(true)
+                .path("/")
                 .build();
 
         // Access Token 저장
@@ -58,6 +61,7 @@ public class AuthApiController {
                 .maxAge(COOKIE_EXPIRATION)
                 .httpOnly(true)
                 .secure(true)
+                .path("/")
                 .build();
 
         /*return ResponseEntity.ok()
@@ -117,8 +121,9 @@ public class AuthApiController {
     }*/
 
     @PostMapping("/user/logout")
-    public ResponseEntity<?> logOut(HttpServletRequest request) {
+    public ResponseEntity<?> logOut(HttpServletRequest request, HttpServletResponse response) {
         authService.logOut(request);
+        expireCookie(response, "access-token");
         ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
                 .maxAge(0)
                 .path("/")
@@ -128,5 +133,11 @@ public class AuthApiController {
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
+    }
+
+    private void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }

@@ -146,7 +146,7 @@ public class AuthService {
      */
     public void logOut(HttpServletRequest request) {
 
-        // 1. Access Token 헤더로부터 가져옴
+        // 1. Access Token 가져옴
         String requestAccessToken = resolveToken(request);
 
         // 2. Access Token에 담겨 있는 사용자 정보 가져옴
@@ -161,5 +161,7 @@ public class AuthService {
         // 4. Redis에 로그아웃 처리한 AccessToken 저장 --> blackList로 저장
         Long expiration = jwtTokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();
         redisService.setValuesWithTimeout(requestAccessToken, "logout", expiration);
+
+
     }
 }
