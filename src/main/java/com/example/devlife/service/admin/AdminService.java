@@ -1,5 +1,6 @@
 package com.example.devlife.service.admin;
 
+import com.example.devlife.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.devlife.dto.UpdateUserGradeRequest;
@@ -21,22 +22,22 @@ public class AdminService {
 	private final CommentRepository commentRepository;
 
 	@Transactional
-	public void deleteUser(String providerId) {
-		User user = userRepository.findByProviderId(providerId)
-			.orElseThrow(() -> new IllegalArgumentException("not found: " + providerId));
+	public void deleteUser(String providerId) throws UserNotFoundException {
+		User user = userRepository.findByProviderId(providerId);
+		if(user==null) throw new UserNotFoundException();
 		user.withdrawUser(true);
 	}
 
-	public User getUser(String providerId){
-		User user = userRepository.findByProviderId(providerId)
-			.orElseThrow(() -> new IllegalArgumentException("not found: " + providerId));
+	public User getUser(String providerId) throws UserNotFoundException{
+		User user = userRepository.findByProviderId(providerId);
+		if(user==null) throw new UserNotFoundException();
 		return user;
 	}
 
 	@Transactional
-	public User updateUserGrade(String providerId, UpdateUserGradeRequest request){
-		User user = userRepository.findByProviderId(providerId)
-			.orElseThrow(() -> new IllegalArgumentException("not found: " + providerId));
+	public User updateUserGrade(String providerId, UpdateUserGradeRequest request) throws UserNotFoundException{
+		User user = userRepository.findByProviderId(providerId);
+		if(user==null) throw new UserNotFoundException();
 		user.updateGrade(request.getGrade());
 		return user;
 	}

@@ -89,14 +89,14 @@ public class UserService {
     /**
      * 유저 등업
      */
-    @Transactional
+    /*@Transactional
     public void updateGrade(Long id){
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         Grade currentGrade = user.getGrade();
         int newValue = currentGrade.getValue() + 1;
         if(newValue<=2) currentGrade.updateValue(newValue);
         user.updateGrade(currentGrade);
-    }
+    }*/
 
 
 

@@ -121,23 +121,20 @@ public class AuthApiController {
     }*/
 
     @PostMapping("/user/logout")
-    public ResponseEntity<?> logOut(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> logOut(HttpServletRequest request) {
         authService.logOut(request);
-        expireCookie(response, "access-token");
-        ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh-token", "")
+                .maxAge(0)
+                .path("/")
+                .build();
+        ResponseCookie accessTokenCookie = ResponseCookie.from("access-token", "")
                 .maxAge(0)
                 .path("/")
                 .build();
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
                 .build();
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 }
