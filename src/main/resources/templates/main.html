@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <meta charset="UTF-8">
+    <title>개발생활</title>
+</head>
+<body>
+
+<aside>
+    <ul class="tree-view">
+        <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
+        <li style="font-weight: bold">
+            <a href="#components" >Category</a>
+
+            <ul>
+                <li><a th:href="@{/mypage}" th:if="${account != null}">마이페이지</a></li>
+                <li><a th:href="@{/login}" th:if="${account == null}">로그인</a></li>
+                <li ><a id="logout-link" th:href="@{/user/logout}" th:if="${account != null}">로그아웃</a></li>
+                <li><a th:href="@{/signup}" th:if="${account == null}">회원가입</a></li>
+                <li>
+                    <a href="#window">게시판</a>
+                    <ul>
+                        <li><a href="#title-bar">개발자 도구</a></li>
+                        <li><a href="#window-contents">개발자네 개팔자</a></li>
+                        <li><a href="#status-bar">고독한 개발자</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
+    </ul>
+</aside>
+<main>
+    <h1 style="font-family: DungGeunMo,serif">개발생활</h1>
+    <div th:if="${account != null}">
+        <p th:text="'Welcome, ' + ${account.getNickname()}"></p>
+    </div>
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text" style="font-family: DungGeunMo,serif">
+                개발생활은요...
+            </div>
+        </div>
+        <div class="window-body">
+            <p>개발자의 삶을 보여주세요.....</p>
+        </div>
+    </div>
+
+</main>
+
+
+<div class="sunken-panel">
+    <table class="interactive">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>작성일자</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>좋아요 수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>MySQL ODBC 3.51 Driver</td>
+            <td>3.51.11.00</td>
+            <td>MySQL AB</td>
+            <td>3.51.11.00</td>
+            <td>MySQL AB</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        <tr>
+            <td>SQL Server</td>
+            <td>3.70.06.23</td>
+            <td>Microsoft Corporation</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    document.querySelectorAll('table.interactive').forEach(element => {
+        element.addEventListener('click', (event) => {
+            const row = event.path.find(element => element.tagName === 'TR' && element.parentElement.tagName === 'TBODY');
+            if (row) {
+                row.classList.toggle('highlighted');
+            }
+        })
+    });
+</script>
+
+<script th:src="@{/js/logout.js}"></script>
+</body>
+</html>

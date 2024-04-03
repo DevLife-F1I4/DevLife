@@ -1,102 +1,59 @@
 package com.example.devlife.controller;
 
-import com.example.devlife.dto.AuthDto;
-import com.example.devlife.service.AuthService;
+import com.example.devlife.dto.UserInfoDto;
+import com.example.devlife.entity.User;
 import com.example.devlife.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserApiController {
 
-    private final AuthService authService;
     private final UserService userService;
-    private final long COOKIE_EXPIRATION = 60*60*24*7; // 7일
 
-    // 회원가입
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody @Valid AuthDto.SignUpDto signUpDto) {
-        userService.signUp(signUpDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+    /**
+     * 마이페이지 --> 내 정보 조회
+     */
+    @GetMapping("/user/me")
+    public ResponseEntity<UserInfoDto.UserResponse> getMyInfo(@AuthenticationPrincipal User userAccount) {
+        log.info("로그인 유저 아이디 " + userAccount.getProviderId());
+        UserInfoDto.UserResponse userInfo = userService.getUserInfo(userAccount.getProviderId());
+        return ResponseEntity.ok(userInfo);
     }
 
-    // 로그인
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid AuthDto.LoginDto loginDto) {
-        AuthDto.TokenDto tokenDto = authService.login(loginDto);
-
-        // Refresh Token 저장
-        HttpCookie httpCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
-                .maxAge(COOKIE_EXPIRATION)
-                .httpOnly(true)
-                .secure(true)
-                .build();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
-                // AccessToken 저장
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
-                .build();
+    /**
+     * 내 정보 수정 (닉네임 수정)
+     */
+    @PutMapping("/user/me")
+    public ResponseEntity<?> updateMyInfo(@AuthenticationPrincipal User userAccount,
+                                          @Valid @RequestBody UserInfoDto.UserRequest request) {
+        log.info("로그인 유저 아이디 " + userAccount.getProviderId());
+        userService.updateUserInfo(userAccount.getProviderId(), request );
+        return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/validate")
-    public ResponseEntity<?> validate(@RequestHeader("Authorization") String requestAccessToken) {
-        if (!authService.validate(requestAccessToken)) {
-            return ResponseEntity.status(HttpStatus.OK).build(); // 재발급 필요X
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 재발급 필요
-        }
-    }
 
-    // 토큰 재발급
-    @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@CookieValue(name = "refresh-token") String requestRefreshToken,
-                                     @RequestHeader("Authorization") String requestAccessToken) {
-        AuthDto.TokenDto reissuedTokenDto = authService.reissue(requestAccessToken, requestRefreshToken);
 
-        if (reissuedTokenDto != null) { // 토큰 재발급 성공
-            // Refresh Token 저장
-            ResponseCookie responseCookie = ResponseCookie.from("refresh-token", reissuedTokenDto.getRefreshToken())
-                    .maxAge(COOKIE_EXPIRATION)
-                    .httpOnly(true)
-                    .secure(true)
-                    .build();
+    /**
+     * 내가 작성한 글 조회
+     */
+    /*@GetMapping("/user/boards")
+    public ResponseEntity<?> getMyBoards(@AuthenticationPrincipal User userAccount) {
+        log.info("로그인 유저 아이디 " + userAccount.getProviderId());
+    }*/
 
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                    // Access Token 저장
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + reissuedTokenDto.getAccessToken())
-                    .build();
+    /**
+     * 내가 작성한 댓글 조회
+     */
+    /*@GetMapping("/user/comments")
+    public ResponseEntity<?> getMyComments() {
+    }*/
 
-        } else { // Refresh Token 탈취 가능성
-            // Cookie 삭제 후 재로그인 유도
-            ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
-                    .maxAge(0)
-                    .path("/")
-                    .build();
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                    .build();
-        }
-    }
-
-    @PostMapping("/logout")
-    public ResponseEntity<?> logOut(@RequestHeader("Authorization") String requestAccessToken) {
-        authService.logOut(requestAccessToken);
-        ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
-                .maxAge(0)
-                .path("/")
-                .build();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
-                .build();
-    }
 }

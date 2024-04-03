@@ -3,6 +3,7 @@ package com.example.devlife.security;
 import io.jsonwebtoken.IncorrectClaimException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Access Token 추출
         String accessToken = resolveToken(request);
+        log.info("dofilter aT : " + accessToken);
 
         try { // 정상 토큰인지 검사
             if (accessToken != null && jwtTokenProvider.validateAccessToken(accessToken)) {
@@ -57,11 +59,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     }
 
-    // HTTP Request 헤더로부터 토큰 추출
     public String resolveToken(HttpServletRequest httpServletRequest) {
-        String bearerToken = httpServletRequest.getHeader("Authorization");
+
+        // HTTP Request 헤더로부터 토큰 추출
+        /*String bearerToken = httpServletRequest.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
+        }*/
+
+        // 쿠키로부터 토큰 추출
+        String accessToken = null;
+        Cookie[] cookies = httpServletRequest.getCookies();
+        if(cookies!=null){
+            for (Cookie cookie : cookies){
+                if ("access-token".equals(cookie.getName())) {
+                    accessToken = cookie.getValue();
+                    log.info("accessToken : " + accessToken);
+                    break;
+                }
+            }
+        }
+
+        if (accessToken != null) {
+            return accessToken;
         }
         return null;
     }

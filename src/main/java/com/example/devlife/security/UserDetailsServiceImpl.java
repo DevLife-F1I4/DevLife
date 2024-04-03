@@ -1,13 +1,16 @@
 package com.example.devlife.security;
 
+import com.example.devlife.dto.UserAccount;
 import com.example.devlife.entity.User;
 import com.example.devlife.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -15,15 +18,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetailsImpl loadUserByUsername(String providerId) throws UsernameNotFoundException {
-        User findUser =  userRepository.findByProviderId(providerId)
-                .orElseThrow(() -> new UsernameNotFoundException("Can't find user with this providerId -> " + providerId));
-
-        if(findUser != null){
-            UserDetailsImpl userDetails = new UserDetailsImpl(findUser);
-            return  userDetails;
+    public UserDetails loadUserByUsername(String providerId) throws UsernameNotFoundException {
+        User findUser = userRepository.findByProviderId(providerId);
+        log.info("아이디 loadUserByUsername : " + findUser.getProviderId());
+        if(findUser == null){
+            throw new UsernameNotFoundException(providerId);
         }
-
-        return null;
+        return new UserAccount(findUser);
     }
 }

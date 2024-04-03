@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+    <aside>
+        <ul class="tree-view">
+            <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
+            <li style="font-weight: bold">
+                <a href="#components" >Category</a>
+                <ul>
+                    <li><a th:href="@{/mypage}" sec:authorize="hasRole('USER')">마이페이지</a></li>
+                    <li><a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a></li>
+                    <li><a th:href="@{/user/logout}" sec:authorize="isAuthenticated()">로그아웃</a></li>
+                    <li><a th:href="@{/signup}" sec:authorize="isAnonymous()">회원가입</a></li>
+                    <li>
+                        <a href="#window">게시판</a>
+                        <ul>
+                            <li><a href="#title-bar">개발자 도구</a></li>
+                            <li><a href="#window-contents">개발자네 개팔자</a></li>
+                            <li><a href="#status-bar">고독한 개발자</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
+        </ul>
+    </aside>
+
+    <main>
+        <h2> 회원가입</h2>
+        <form class="signup-form">
+            <!-- 토큰을 추가하여 CSRF 공격 방지 -->
+            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+        <div class="field-row-stacked">
+            <label for="providerId">아이디</label>
+            <input id="providerId" type="text" name="providerId" placeholder="아이디"/>
+            <button id="id-btn" style="width: 100px">아이디 중복확인</button>
+
+        </div>
+        <div class="field-row-stacked">
+            <label for="password">패스워드</label>
+            <input id="password" type="password" name="password" placeholder="******"/>
+        </div>
+        <div class="field-row-stacked">
+            <label for="passwordConfirm">패스워드 확인</label>
+            <input id="passwordConfirm" type="password" name="password" placeholder="******"/>
+        </div>
+        <div class="field-row-stacked">
+            <label for="nickname">Nickname</label>
+            <input id="nickname" type="text" name="nickname"/>
+            <button id="nickname-btn" style="width: 100px">닉네임 중복확인</button>
+
+        </div>
+
+        <button id="signup-btn" style="width: 100px">회원가입</button>
+        </form>
+    </main>
+    <script th:src="@{/js/valid.js}"></script>
+    <script th:src="@{/js/signup.js}"></script>
+</body>
+</html> 

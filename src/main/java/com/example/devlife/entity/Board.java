@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "board")
 @Builder
@@ -49,11 +50,15 @@ public class Board {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    private List<Comment> commentList;
+
 }
