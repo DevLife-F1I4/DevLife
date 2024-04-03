@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <link rel="stylesheet" th:href="@{/css/signup.css}">
@@ -13,9 +14,10 @@
             <li style="font-weight: bold">
                 <a href="#components" >Category</a>
                 <ul>
-                    <li><a th:href="@{/mypage}">마이페이지</a></li>
-                    <li><a th:href="@{/login}">로그인</a></li>
-                    <li><a th:href="@{/signup}">회원가입</a></li>
+                    <li><a th:href="@{/mypage}" sec:authorize="hasRole('USER')">마이페이지</a></li>
+                    <li><a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a></li>
+                    <li><a th:href="@{/user/logout}" sec:authorize="isAuthenticated()">로그아웃</a></li>
+                    <li><a th:href="@{/signup}" sec:authorize="isAnonymous()">회원가입</a></li>
                     <li>
                         <a href="#window">게시판</a>
                         <ul>
@@ -38,6 +40,8 @@
         <div class="field-row-stacked">
             <label for="providerId">아이디</label>
             <input id="providerId" type="text" name="providerId" placeholder="아이디"/>
+            <button id="id-btn" style="width: 100px">아이디 중복확인</button>
+
         </div>
         <div class="field-row-stacked">
             <label for="password">패스워드</label>
@@ -50,12 +54,14 @@
         <div class="field-row-stacked">
             <label for="nickname">Nickname</label>
             <input id="nickname" type="text" name="nickname"/>
+            <button id="nickname-btn" style="width: 100px">닉네임 중복확인</button>
+
         </div>
 
-        <button id="signup-btn">회원가입</button>
+        <button id="signup-btn" style="width: 100px">회원가입</button>
         </form>
     </main>
-
-    <script src="/js/signup.js" th:src="@{/js/signup.js}"></script>
+    <script th:src="@{/js/valid.js}"></script>
+    <script th:src="@{/js/signup.js}"></script>
 </body>
 </html> 

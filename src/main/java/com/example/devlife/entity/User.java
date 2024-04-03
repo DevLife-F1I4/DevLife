@@ -52,6 +52,11 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+
+    public void update(String nickname) {
+        this.nickname=nickname;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Comment> commentList;
 

@@ -1,4 +1,4 @@
-// 로그 기능
+// 로그인 기능
 document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.querySelector('.login-form');
     signupForm.addEventListener('submit', function (event) {
@@ -19,14 +19,15 @@ document.addEventListener('DOMContentLoaded', function () {
         })
 
             .then(response => {
-            if (response.ok) {
+                if (!response.ok) {
+                    throw new Error('로그인 실패');
+                }
                 alert("로그인 성공");
                 location.replace('/main');
-            } else {
-                alert("로그인 실패");
+            })
+            .catch(error => {
+                alert(error.message);
                 location.replace('/login');
-            }
-        })
-            .catch(error => console.error('Error:', error));
+            });
     });
 });

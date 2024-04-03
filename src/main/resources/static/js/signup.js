@@ -1,6 +1,7 @@
 // 회원가입 기능
 document.addEventListener('DOMContentLoaded', function () {
     const signupForm = document.querySelector('.signup-form');
+
     signupForm.addEventListener('submit', function (event) {
         event.preventDefault();
 
@@ -9,9 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const nickname = document.getElementById('nickname').value;
         const passwordConfirm = document.getElementById('passwordConfirm').value;
 
+        console.log("providerId " + providerId);
         const idRegex = /^[a-zA-Z0-9]{5,10}$/;
         if (!idRegex.test(providerId)) {
-            alert('5 ~ 10자 영문, 숫자 조합하세요');
+            alert('아이디는 5 ~ 10자 영문, 숫자를 조합하세요');
             return;
         }
 
@@ -19,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/;
         if (!passwordRegex.test(password)) {
             alert(
-                '8 ~ 16자 영문, 숫자 조합하세요');
+                '비밀번호에 8 ~ 16자 영문, 숫자를 조합하세요');
             return;
         }
 
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const nicknameRegex = /^[a-zA-Zㄱ-힣]{3,10}$/;
         if (!nicknameRegex.test(nickname)) {
             alert(
-                '3 ~ 10자 한글 또는 영어로 입력하세요');
+                '닉네임은 3 ~ 10자 한글 또는 영어로 입력하세요');
             return;
         }
 
@@ -53,9 +55,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert("회원가입 성공");
                     window.location.replace('/main');
                 } else { // 회원가입 실패
-                    alert("회원가입 실패");
+                    alert("회원가입 실패 : 아이디와 닉네임 중복여부를 확인하세요");
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error(error.message));
     });
+
+
 });

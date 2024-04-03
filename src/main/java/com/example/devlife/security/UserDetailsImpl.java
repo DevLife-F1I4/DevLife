@@ -1,11 +1,14 @@
 package com.example.devlife.security;
 
+import com.example.devlife.entity.Role;
 import com.example.devlife.entity.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -14,6 +17,7 @@ public class UserDetailsImpl implements UserDetails {
     public UserDetailsImpl(User user) {
         this.user = user;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
@@ -30,6 +34,9 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return user.getProviderId();
     }
+
+    public Enum<Role> getRole(){
+        return user.getRole();}
 
     // 계정 만료 여부 반환 (true: 만료 안됨)
     @Override

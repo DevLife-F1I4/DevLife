@@ -1,10 +1,12 @@
 package com.example.devlife.controller;
 
 import com.example.devlife.dto.AuthDto;
-import com.example.devlife.dto.UserDto;
-import com.example.devlife.entity.User;
+import com.example.devlife.dto.UserInfoDto;
 import com.example.devlife.service.AuthService;
 import com.example.devlife.service.user.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -21,8 +23,24 @@ public class AuthApiController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ResponseEntity<UserDto.UserResponse> signUp(@RequestBody @Valid AuthDto.SignUpDto signUpDto) {
+    public ResponseEntity<UserInfoDto.UserResponse> signUp(@RequestBody @Valid AuthDto.SignUpDto signUpDto) {
         return ResponseEntity.ok(userService.signUp(signUpDto));
+    }
+
+    /**
+     * 아이디 중복 여부 확인
+     */
+    @PostMapping("/signup/checkId")
+    public ResponseEntity<Boolean> checkId(@RequestBody UserInfoDto.UserIdRequest idRequest) {
+        return ResponseEntity.ok(userService.validateDuplicateId(idRequest.getProviderId()));
+    }
+
+    /**
+     * 닉네임 중복 여부 확인
+     */
+    @PostMapping("/signup/checkNickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestBody UserInfoDto.UserRequest nickname) {
+        return ResponseEntity.ok(userService.validateDuplicateNickname(nickname.getNickname()));
     }
 
     // 로그인
@@ -31,20 +49,35 @@ public class AuthApiController {
         AuthDto.TokenDto tokenDto = authService.login(loginDto);
 
         // Refresh Token 저장
-        HttpCookie httpCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
+        HttpCookie refreshCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
                 .maxAge(COOKIE_EXPIRATION)
                 .httpOnly(true)
                 .secure(true)
+                .path("/")
                 .build();
 
-        return ResponseEntity.ok()
+        // Access Token 저장
+        HttpCookie accessCookie = ResponseCookie.from("access-token", tokenDto.getAccessToken())
+                .maxAge(COOKIE_EXPIRATION)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .build();
+
+        /*return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
                 // AccessToken 저장
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
+                .build();*/
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, refreshCookie.toString())
+                // AccessToken 저장
+                .header(HttpHeaders.SET_COOKIE, accessCookie.toString())
                 .build();
     }
 
-    @PostMapping("/validate")
+    /*@PostMapping("/validate")
     public ResponseEntity<?> validate(@RequestHeader("Authorization") String requestAccessToken) {
         if (!authService.validate(requestAccessToken)) {
             return ResponseEntity.status(HttpStatus.OK).build(); // 재발급 필요X
@@ -85,11 +118,12 @@ public class AuthApiController {
                     .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .build();
         }
-    }
+    }*/
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logOut(@RequestHeader("Authorization") String requestAccessToken) {
-        authService.logOut(requestAccessToken);
+    @PostMapping("/user/logout")
+    public ResponseEntity<?> logOut(HttpServletRequest request, HttpServletResponse response) {
+        authService.logOut(request);
+        expireCookie(response, "access-token");
         ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
                 .maxAge(0)
                 .path("/")
@@ -99,5 +133,11 @@ public class AuthApiController {
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .build();
+    }
+
+    private void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
@@ -7,15 +8,18 @@
     <title>개발생활</title>
 </head>
 <body>
+
 <aside>
     <ul class="tree-view">
         <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
         <li style="font-weight: bold">
             <a href="#components" >Category</a>
+
             <ul>
-                <li><a th:href="@{/mypage}">마이페이지</a></li>
-                <li><a th:href="@{/login}">로그인</a></li>
-                <li><a th:href="@{/signup}">회원가입</a></li>
+                <li><a th:href="@{/mypage}" th:if="${account != null}">마이페이지</a></li>
+                <li><a th:href="@{/login}" th:if="${account == null}">로그인</a></li>
+                <li><a th:href="@{/user/logout}" th:if="${account != null}">로그아웃</a></li>
+                <li><a th:href="@{/signup}" th:if="${account == null}">회원가입</a></li>
                 <li>
                     <a href="#window">게시판</a>
                     <ul>
@@ -31,6 +35,9 @@
 </aside>
 <main>
     <h1 style="font-family: DungGeunMo,serif">개발생활</h1>
+    <div th:if="${account != null}">
+        <p th:text="'Welcome, ' + ${account.getNickname()}"></p>
+    </div>
     <div class="window">
         <div class="title-bar">
             <div class="title-bar-text" style="font-family: DungGeunMo,serif">
@@ -123,5 +130,6 @@
     });
 </script>
 
+<!--<script th:src="@{/js/main.js}"></script>-->
 </body>
 </html>
