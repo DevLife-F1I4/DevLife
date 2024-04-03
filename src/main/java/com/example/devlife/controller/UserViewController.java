@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -18,9 +19,9 @@ public class UserViewController {
     public String mainPage(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
                            User account, Model model){
         if(account != null) {
-            log.info("메인페이지 " + account.getNickname());
             model.addAttribute("account", account);
         }
+
         return "main";
     }
     @GetMapping("/login")

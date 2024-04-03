@@ -4,6 +4,7 @@ import com.example.devlife.dto.AuthDto;
 import com.example.devlife.dto.UserInfoDto;
 import com.example.devlife.service.AuthService;
 import com.example.devlife.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -46,20 +47,33 @@ public class AuthApiController {
         AuthDto.TokenDto tokenDto = authService.login(loginDto);
 
         // Refresh Token 저장
-        HttpCookie httpCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
+        HttpCookie refreshCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
                 .maxAge(COOKIE_EXPIRATION)
                 .httpOnly(true)
                 .secure(true)
                 .build();
 
-        return ResponseEntity.ok()
+        // Access Token 저장
+        HttpCookie accessCookie = ResponseCookie.from("access-token", tokenDto.getAccessToken())
+                .maxAge(COOKIE_EXPIRATION)
+                .httpOnly(true)
+                .secure(true)
+                .build();
+
+        /*return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
                 // AccessToken 저장
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
+                .build();*/
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, refreshCookie.toString())
+                // AccessToken 저장
+                .header(HttpHeaders.SET_COOKIE, accessCookie.toString())
                 .build();
     }
 
-    @PostMapping("/validate")
+    /*@PostMapping("/validate")
     public ResponseEntity<?> validate(@RequestHeader("Authorization") String requestAccessToken) {
         if (!authService.validate(requestAccessToken)) {
             return ResponseEntity.status(HttpStatus.OK).build(); // 재발급 필요X
@@ -100,11 +114,11 @@ public class AuthApiController {
                     .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                     .build();
         }
-    }
+    }*/
 
     @PostMapping("/user/logout")
-    public ResponseEntity<?> logOut(@RequestHeader("Authorization") String requestAccessToken) {
-        authService.logOut(requestAccessToken);
+    public ResponseEntity<?> logOut(HttpServletRequest request) {
+        authService.logOut(request);
         ResponseCookie responseCookie = ResponseCookie.from("refresh-token", "")
                 .maxAge(0)
                 .path("/")

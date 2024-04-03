@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     alert("회원가입 성공");
                     window.location.replace('/main');
                 } else { // 회원가입 실패
-                    alert("회원가입 실패");
+                    alert("회원가입 실패 : 아이디와 닉네임 중복여부를 확인하세요");
                 }
             })
             .catch(error => console.error(error.message));

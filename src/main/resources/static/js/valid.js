@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('아이디를 입력해주세요.');
             return;
         }
+        debugger;
         fetch('/api/signup/checkId', {
             method: 'POST',
             headers: {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <link rel="stylesheet" th:href="@{/css/signup.css}">
@@ -61,7 +61,7 @@
         <button id="signup-btn" style="width: 100px">회원가입</button>
         </form>
     </main>
-    <script src="/js/signup.js" th:src="@{/js/valid.js}"></script>
-    <script src="/js/signup.js" th:src="@{/js/signup.js}"></script>
+    <script th:src="@{/js/valid.js}"></script>
+    <script th:src="@{/js/signup.js}"></script>
 </body>
 </html> 

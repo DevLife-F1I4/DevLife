@@ -2,6 +2,8 @@ package com.example.devlife.service;
 
 import com.example.devlife.dto.AuthDto;
 import com.example.devlife.security.JwtTokenProvider;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -73,7 +75,7 @@ public class AuthService {
     /**
      * 토큰 재발급
      */
-    @Transactional
+    /*@Transactional
     public AuthDto.TokenDto reissue(String requestAccessTokenInHeader, String requestRefreshToken) {
 
         // 1. Header로부터 accessToken 추출
@@ -104,29 +106,48 @@ public class AuthService {
         AuthDto.TokenDto tokenDto = jwtTokenProvider.createToken(principal, authentication);
         saveRefreshToken(SERVER, principal, tokenDto.getRefreshToken());
         return tokenDto;
-    }
+    }*/
 
-    // "Bearer {AccessToken}"에서 AccessToken 추출
+    /*// "Bearer {AccessToken}"에서 AccessToken 추출
     public String resolveToken(String requestAccessTokenInHeader) {
         if (requestAccessTokenInHeader != null && requestAccessTokenInHeader.startsWith("Bearer ")) {
             return requestAccessTokenInHeader.substring(7);
         }
         return null;
+    }*/
+
+    // 쿠키에서 AccessToken 추출
+    public String resolveToken(HttpServletRequest httpServletRequest) {
+        String accessToken = null;
+        Cookie[] cookies = httpServletRequest.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("access-token".equals(cookie.getName())) {
+                    accessToken = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (accessToken != null) {
+            return accessToken;
+        }
+        return null;
     }
 
     // AT가 만료일자만 초과한 유효한 토큰인지 검사
-    public boolean validate(String requestAccessTokenInHeader) {
+    /*public boolean validate(String requestAccessTokenInHeader) {
         String requestAccessToken = resolveToken(requestAccessTokenInHeader);
         return jwtTokenProvider.validateAccessTokenOnlyExpired(requestAccessToken); // true = 재발급
-    }
+    }*/
 
     /**
      * 로그아웃
      */
-    public void logOut(String requestAccessTokenInHeader) {
+    public void logOut(HttpServletRequest request) {
 
         // 1. Access Token 헤더로부터 가져옴
-        String requestAccessToken = resolveToken(requestAccessTokenInHeader);
+        String requestAccessToken = resolveToken(request);
 
         // 2. Access Token에 담겨 있는 사용자 정보 가져옴
         String principal = jwtTokenProvider.getAuthentication(requestAccessToken).getName();

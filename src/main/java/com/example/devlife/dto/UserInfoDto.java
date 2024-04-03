@@ -2,16 +2,13 @@ package com.example.devlife.dto;
 
 import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 public class UserInfoDto {
 
     @Getter
-    @NoArgsConstructor
     @AllArgsConstructor
+    @Setter
     public static class UserResponse{
         private String providerId;
         private String nickname;
