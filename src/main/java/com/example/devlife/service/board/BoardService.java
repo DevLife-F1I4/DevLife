@@ -4,6 +4,7 @@ import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
 import com.example.devlife.entity.Board;
 import com.example.devlife.entity.User;
+import com.example.devlife.exception.UserNotFoundException;
 import com.example.devlife.repository.board.BoardRepository;
 import com.example.devlife.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -20,7 +21,8 @@ public class BoardService {
     @Transactional
     public Long saveBoard(BoardWriteRequestDto newboardWriteRequestDto,
                           String providerid) {
-        User user = userRepository.findByProviderId(providerid).orElseThrow(() -> new UsernameNotFoundException("권한이 없습니다."));
+        User user = userRepository.findByProviderId(providerid);
+        if(user == null) throw new UserNotFoundException();
 
         Board result = Board.builder()
                 .category(newboardWriteRequestDto.getCategory())
