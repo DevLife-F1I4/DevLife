@@ -51,8 +51,8 @@
             <div class="form-group">
                 <div class="category">
                     <label for="category">카테고리</label>
-                    <select id="category" name="category" th:field="*{category}">
-                        <option th:each="category : ${category}" th:value="${category}" th:text="${category}"></option>
+                    <select id="category" name="category">
+                        <option option th:each="cat : ${category}" th:value="${category}" th:text="${category}"></option>
                     </select>
                 </div>
                 <div class="field-row-stacked">

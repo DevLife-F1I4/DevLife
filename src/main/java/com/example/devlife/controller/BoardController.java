@@ -51,7 +51,7 @@ public class BoardController {
 
     //글수정 GET
     @GetMapping("/{id}/update")
-    public String boardUpdateForm(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+    public String boardUpdateForm(@PathVariable Long id, Model model, Category category, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
         BoardResponseDto result = boardService.boardDetail(id);
         if (!Objects.equals(result.getUser().getProviderId(), userDetailsImpl.getUsername())) {
             return "redirect:/";
@@ -59,6 +59,7 @@ public class BoardController {
 
         model.addAttribute("dto", result);
         model.addAttribute("board_id", id);
+        model.addAttribute("category", Category.values());
 
         return "board/update";
     }
