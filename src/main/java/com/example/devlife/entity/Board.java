@@ -38,7 +38,7 @@ public class Board {
     @Column(name = "board_like", columnDefinition = "integer default 0",nullable = false)
     private int boardLike;
 
-    @Column(name = "image_url"/* , nullable = false */)
+    @Column(name = "image_url")
     private String imageUrl;
 
     @CreatedDate
@@ -53,12 +53,11 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    private List<Comment> commentList;
+
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
     }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
-    private List<Comment> commentList;
-
 }

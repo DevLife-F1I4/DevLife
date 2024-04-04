@@ -2,6 +2,9 @@ package com.example.devlife.controller;
 
 import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
+import com.example.devlife.entity.Category;
+import com.example.devlife.entity.User;
+import com.example.devlife.repository.user.UserRepository;
 import com.example.devlife.security.UserDetailsImpl;
 import com.example.devlife.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -16,25 +19,38 @@ import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/board")
+@RequestMapping("/board")
 public class BoardController {
     private final BoardService boardService;
+    private final UserRepository userRepository;
 
     //글작성 GET
-    @GetMapping
-    public String boardWriteForm() {
+    @GetMapping("/write")
+    public String boardWriteForm(Model model) {
+        model.addAttribute("category", Category.values());
         return "board/write";
     }
 
     //글작성 POST
-    @PostMapping
+    @PostMapping("/write")
     public String postBoardWrite(BoardWriteRequestDto boardWriteRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
         boardService.saveBoard(boardWriteRequestDto, userDetailsImpl.getUsername());
         return "redirect:/";
     }
 
-    //글수정 GET
+    //글상세 GET
     @GetMapping("/{id}")
+    public String boardDetail(@PathVariable Long id, Model model) {
+        BoardResponseDto result = boardService.boardDetail(id);
+
+        model.addAttribute("dto", result);
+        model.addAttribute("board_id", id);
+
+        return "board/detail";
+    }
+
+    //글수정 GET
+    @GetMapping("/{id}/update")
     public String boardUpdateForm(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
         BoardResponseDto result = boardService.boardDetail(id);
         if (!Objects.equals(result.getUser().getProviderId(), userDetailsImpl.getUsername())) {

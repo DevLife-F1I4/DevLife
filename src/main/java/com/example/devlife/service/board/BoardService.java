@@ -9,7 +9,6 @@ import com.example.devlife.repository.board.BoardRepository;
 import com.example.devlife.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +20,9 @@ public class BoardService {
     @Transactional
     public Long saveBoard(BoardWriteRequestDto newboardWriteRequestDto,
                           String providerid) {
+
         User user = userRepository.findByProviderId(providerid);
+
         if(user == null) throw new UserNotFoundException();
 
         Board result = Board.builder()
@@ -30,7 +31,8 @@ public class BoardService {
                 .content(newboardWriteRequestDto.getContent())
                 .user(user)
                 .build();
-        return null;
+        boardRepository.save(result);
+        return result.getId();
     }
 
     public BoardResponseDto boardDetail(Long id) {
