@@ -13,7 +13,7 @@ spring:
         format_sql: true
 
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   data:
     redis:
@@ -26,4 +26,4 @@ server:
 jwt:
   secret: VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4=VGhpcyBpcyBhIGRlbW8gcHJvamVjdCBmb3IgaW1wbGVtZW50aW5nIGp3dC4= # 임의의 문자열을 Base64로 인코딩한 값
   refresh-expiration-time: 604800000  # 1000 * 60 * 60 * 24 * 7 => 7일
-  access-expiration-time:  1800000 # 1000 * 60 * 30 => 30분
+  access-expiration-time:  180000 # 1000 * 60 * 3 => 3분

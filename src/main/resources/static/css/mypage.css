@@ -47,3 +47,7 @@ main{
     height: 120px; 
     width: 840px;
 }
+
+#update-nickname-btn{
+    margin-left: 20px;
+}
