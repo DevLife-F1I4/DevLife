@@ -75,7 +75,7 @@ public class BoardController {
 
     //글수정 POST
     @PostMapping("/{id}/update")
-    public String postBoardUpdate(@PathVariable Long id, BoardWriteRequestDto boardWriteRequestDTO) {
+    public String postBoardUpdate(@PathVariable Long id, @RequestBody BoardWriteRequestDto boardWriteRequestDTO) {
         boardService.boardUpdate(id, boardWriteRequestDTO);
 
         return "redirect:/board/" + id;
