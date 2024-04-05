@@ -48,7 +48,13 @@ public class BoardController {
 
     //글상세 GET
     @GetMapping("/{id}")
-    public String boardDetail(@PathVariable Long id, Model model) {
+    public String boardDetail(@AuthenticationPrincipal
+                                          (expression = "#this == 'anonymousUser' ? null : account")
+                                  User account,
+                              @PathVariable Long id, Model model) {
+        if(account != null) {
+            model.addAttribute("account", account);
+        }
         BoardResponseDto result = boardService.boardDetail(id);
 
         model.addAttribute("dto", result);
