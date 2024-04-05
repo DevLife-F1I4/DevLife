@@ -32,10 +32,11 @@ main{
     margin-bottom: 60px;
 }
 
-.window{
+.window-body{
     width: 800px;
-    height: 100px;
+    height: 20px;
     margin-top: 40px;
+    margin-left: 300px;
 }
 
 .field-row-stacked{

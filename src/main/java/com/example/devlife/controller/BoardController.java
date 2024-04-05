@@ -59,9 +59,10 @@ public class BoardController {
 
     //글수정 GET
     @GetMapping("/{id}/update")
-    public String boardUpdateForm(@PathVariable Long id, Model model, Category category, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+    public String boardUpdateForm(@PathVariable Long id, Model model, Category category,
+                                  @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         BoardResponseDto result = boardService.boardDetail(id);
-        if (!Objects.equals(result.getUser().getProviderId(), userDetailsImpl.getUsername())) {
+        if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
             return "redirect:/";
         }
 
@@ -82,9 +83,10 @@ public class BoardController {
 
     //글삭제
     @DeleteMapping("/{id}")
-    public String boardRemove(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
+    public String boardRemove(@PathVariable Long id,
+                              @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         BoardResponseDto result = boardService.boardDetail(id);
-        if (!Objects.equals(result.getUser().getProviderId(), userDetailsImpl.getUsername())) {
+        if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
             return "redirect:/";
         }
 
