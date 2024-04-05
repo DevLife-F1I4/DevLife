@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -33,6 +35,10 @@ public class BoardService {
                 .build();
         boardRepository.save(result);
         return result.getId();
+    }
+
+    public List<Board> findAll(){
+        return boardRepository.findAll();
     }
 
     public BoardResponseDto boardDetail(Long id) {

@@ -18,8 +18,8 @@ public class BoardResponseDto {
     private Category category;
     private String title;
     private String content;
-    private int hit;
-    private int boardLike;
+    /*private int hit;
+    private int boardLike;*/
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private User user;
@@ -30,8 +30,8 @@ public class BoardResponseDto {
         this.category = board.getCategory();
         this.title = board.getTitle();
         this.content = board.getContent();
-        this.hit = board.getHit();
-        this.boardLike = board.getBoardLike();
+       /* this.hit = board.getHit();
+        this.boardLike = board.getBoardLike();*/
         this.createdAt = board.getCreatedAt();
         this.updatedAt = board.getUpdatedAt();
         this.user = board.getUser();
