@@ -106,6 +106,7 @@ public class JwtTokenProvider implements InitializingBean {
     }
 
     public long getTokenExpirationTime(String token) {
+        log.info("token expiration time : " + getClaims(token).getExpiration().getTime());
         return getClaims(token).getExpiration().getTime();
     }
 
@@ -139,7 +140,7 @@ public class JwtTokenProvider implements InitializingBean {
     public boolean validateAccessToken(String accessToken) {
         try {
             if (redisService.getValues(accessToken) != null // NPE 방지
-                    && redisService.getValues(accessToken).equals("logout")) { // 로그아웃했을 경우
+                    && redisService.getValues(accessToken).equals("logout")) { // 로그아웃했을 경우 = blacklist에 accessToken이 존재하는 경우
                 return false;
             }
             Jwts.parserBuilder()
@@ -148,6 +149,7 @@ public class JwtTokenProvider implements InitializingBean {
                     .parseClaimsJws(accessToken);
             return true;
         } catch(ExpiredJwtException e) {
+            log.info("Expired JWT token.");
             return true;
         } catch (Exception e) {
             return false;

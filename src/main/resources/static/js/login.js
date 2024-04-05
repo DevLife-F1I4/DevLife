@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const providerId = document.getElementById('providerId').value;
         const password = document.getElementById('password').value;
-
+        debugger;
         fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 password: password
             })
         })
-
             .then(response => {
                 if (!response.ok) {
                     throw new Error('로그인 실패');
@@ -25,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("로그인 성공");
                 location.replace('/main');
             })
+
             .catch(error => {
                 alert(error.message);
                 location.replace('/login');
