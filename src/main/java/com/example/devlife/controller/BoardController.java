@@ -26,15 +26,23 @@ public class BoardController {
 
     //글작성 GET
     @GetMapping("/write")
-    public String boardWriteForm(Model model) {
+    public String boardWriteForm(@AuthenticationPrincipal
+                                 (expression = "#this == 'anonymousUser' ? null : account")
+                                 User account, Model model) {
+        if(account != null) {
+            model.addAttribute("account", account);
+        }
         model.addAttribute("category", Category.values());
         return "board/write";
     }
 
     //글작성 POST
     @PostMapping("/write")
-    public String postBoardWrite(BoardWriteRequestDto boardWriteRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl) {
-        boardService.saveBoard(boardWriteRequestDto, userDetailsImpl.getUsername());
+    public String postBoardWrite(@AuthenticationPrincipal
+                                 (expression = "#this == 'anonymousUser' ? null : account")
+                                 User account,
+                                 BoardWriteRequestDto boardWriteRequestDto) {
+        boardService.saveBoard(boardWriteRequestDto, account.getProviderId());
         return "redirect:/";
     }
 

@@ -23,7 +23,7 @@ public class Board {
     @Column(name = "board_id", updatable = false)
     private Long id;
 
-    @Column(name = "category", nullable = false)
+    @Column(name = "category"/*, nullable = false*/)
     private Category category;
 
     @Column(name = "title", nullable = false)
