@@ -33,8 +33,8 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.0.M1'
 
     // AWS Secret Manager
-    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.3'
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.3'
+//    implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'

@@ -46,6 +46,7 @@ public class BoardService {
     public List<Board> findAllByCategory(Category category){
         return boardRepository.findByCategory(category);
     }
+
     public BoardResponseDto boardDetail(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         BoardResponseDto result = BoardResponseDto.builder()

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <meta charset="UTF-8">
     <title>
-        개발생활|[[${dto.getTitle()}]]
+        개발생활 | [[${dto.getTitle()}]]
     </title>
 </head>
 <body>
@@ -43,8 +43,7 @@
 
     <div class="window">
         <div class="title-bar">
-            <div class="title-bar-text" id="category" name="category" th:value="${dto.getCategory()}"></div>
-            <div class="title-bar-text" id="title" name="title" th:value="${dto.getTitle()}"></div>
+            <div class="title-bar-text" id="title-bar" name="title-bar">[[${dto.getCategory().getDescription()}]] | [[${dto.getTitle()}]]</div>
             <div class="title-bar-controls">
                 <button aria-label="Minimize"></button>
                 <button aria-label="Maximize"></button>
@@ -52,17 +51,23 @@
             </div>
         </div>
 
-        <div class="content" id="content" name="content" th:value="${dto.getContent()}"></div>
+        <div class="content" id="content" name="content">[[${dto.getContent()}]]</div>
 
         <div class="status-bar">
             <p class="status-bar-field">작성자:
-                <span id="username" name="username" th:value="${dto.getUser().getProviderId()}"></span>
+                <span id="username" name="username">[[${dto.getUser().getNickname()}]]</span>
             </p>
             <p class="status-bar-field">작성일:
-                <span id="created-at" name="created-at" th:value="${dto.getCreatedAt()}"></span>
+                <span id="created-at" name="created-at">[[${dto.getCreatedAt()}]]</span>
             </p>
             <p class="status-bar-field">수정일:
-                <span id="updated-at" name="updated-at" th:value="${dto.getUpdatedAt()}"></span>
+                <span id="updated-at" name="updated-at">[[${dto.getUpdatedAt()}]]</span>
+            </p>
+            <p class="status-bar-field">조회수:
+                <span id="hit" name="hit">[[${dto.getHit()}]]</span>
+            </p>
+            <p class="status-bar-field">좋아요:
+                <span id="board-like" name="board-like">[[${dto.getBoardLike()}]]</span>
             </p>
         </div>
     </div>
