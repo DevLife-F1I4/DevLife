@@ -52,6 +52,8 @@
         </div>
 
         <div class="content" id="content" name="content">[[${dto.getContent()}]]</div>
+        <button id="edit-board-btn" style="width: 100px; font-weight: bold">수정</button>
+        <button id="delete-btn" style="width: 100px; font-weight: bold">삭제</button>
 
         <div class="status-bar">
             <p class="status-bar-field">작성자:
@@ -72,6 +74,6 @@
         </div>
     </div>
 </main>
-
+<script th:src="@{/js/detail.js}"></script>
 </body>
 </html>

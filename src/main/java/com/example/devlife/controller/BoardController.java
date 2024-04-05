@@ -72,6 +72,9 @@ public class BoardController {
             return "redirect:/";
         }
 
+        if(account != null) {
+            model.addAttribute("account", account);
+        }
         model.addAttribute("dto", result);
         model.addAttribute("board_id", id);
         model.addAttribute("category", Category.values());

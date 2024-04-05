@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const providerId = document.getElementById('providerId').value;
         const password = document.getElementById('password').value;
-        debugger;
+        // debugger;
         fetch('/api/login', {
             method: 'POST',
             headers: {
