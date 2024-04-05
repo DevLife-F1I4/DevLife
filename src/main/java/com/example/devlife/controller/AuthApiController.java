@@ -51,6 +51,7 @@ public class AuthApiController {
         // Refresh Token 저장
         HttpCookie refreshCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
                 .maxAge(COOKIE_EXPIRATION)
+                .sameSite("None")
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
@@ -59,6 +60,7 @@ public class AuthApiController {
         // Access Token 저장
         HttpCookie accessCookie = ResponseCookie.from("access-token", tokenDto.getAccessToken())
                 .maxAge(COOKIE_EXPIRATION)
+                .sameSite("None")
                 .httpOnly(true)
                 .secure(true)
                 .path("/")
