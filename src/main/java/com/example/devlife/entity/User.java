@@ -1,5 +1,6 @@
 package com.example.devlife.entity;
 
+import com.example.devlife.dto.AuthDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -7,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name = "users")
 @Builder
@@ -49,4 +51,20 @@ public class User {
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+
+    public void update(String nickname) {
+        this.nickname=nickname;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Comment> commentList;
+
+    public void withdrawUser(boolean flag){
+        this.withdraw = flag;
+    }
+
+    public void updateGrade(Grade grade){
+        this.grade = grade;
+    }
 }
