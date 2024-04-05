@@ -23,9 +23,10 @@
                 <li>
                     <a href="#window">게시판</a>
                     <ul>
-                        <li><a href="#title-bar">개발자 도구</a></li>
-                        <li><a href="#window-contents">개발자네 개팔자</a></li>
-                        <li><a href="#status-bar">고독한 개발자</a></li>
+                        <li><a th:href="@{/board/list}">글 전체 조회</a></li>
+                        <li><a th:href="@{/board/list/DEVTOOL}">개발자 도구</a></li>
+                        <li><a th:href="@{/board/list/PET}">개발자네 개팔자</a></li>
+                        <li><a th:href="@{/board/list/GOURMET}">고독한 개발자</a></li>
                     </ul>
                 </li>
             </ul>

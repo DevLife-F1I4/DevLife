@@ -1,6 +1,6 @@
 spring:
-  profiles:
-    active: dev
+  ##profiles:
+    ##active: dev
 
   datasource:
     driver-class-name: org.postgresql.Driver

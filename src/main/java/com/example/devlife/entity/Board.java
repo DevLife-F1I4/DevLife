@@ -23,6 +23,7 @@ public class Board {
     @Column(name = "board_id", updatable = false)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     private Category category;
 
