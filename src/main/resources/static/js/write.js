@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log("get OK");
 
-        fetch('/api/board/write', {
+        fetch('/board/write', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",

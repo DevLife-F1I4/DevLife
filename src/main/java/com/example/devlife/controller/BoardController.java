@@ -41,7 +41,7 @@ public class BoardController {
     public String postBoardWrite(@AuthenticationPrincipal
                                  (expression = "#this == 'anonymousUser' ? null : account")
                                  User account,
-                                 BoardWriteRequestDto boardWriteRequestDto) {
+                                 @RequestBody BoardWriteRequestDto boardWriteRequestDto) {
         boardService.saveBoard(boardWriteRequestDto, account.getProviderId());
         return "redirect:/";
     }
