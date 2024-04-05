@@ -25,7 +25,6 @@ public class Board {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
-
     private Category category;
 
     @Column(name = "title", nullable = false)
