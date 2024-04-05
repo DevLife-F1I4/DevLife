@@ -4,11 +4,11 @@ import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
 import com.example.devlife.entity.Board;
 import com.example.devlife.entity.User;
+import com.example.devlife.exception.UserNotFoundException;
 import com.example.devlife.repository.board.BoardRepository;
 import com.example.devlife.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +20,10 @@ public class BoardService {
     @Transactional
     public Long saveBoard(BoardWriteRequestDto newboardWriteRequestDto,
                           String providerid) {
-        User user = userRepository.findByProviderId(providerid).orElseThrow(() -> new UsernameNotFoundException("권한이 없습니다."));
+
+        User user = userRepository.findByProviderId(providerid);
+
+        if(user == null) throw new UserNotFoundException();
 
         Board result = Board.builder()
                 .category(newboardWriteRequestDto.getCategory())
@@ -28,7 +31,8 @@ public class BoardService {
                 .content(newboardWriteRequestDto.getContent())
                 .user(user)
                 .build();
-        return null;
+        boardRepository.save(result);
+        return result.getId();
     }
 
     public BoardResponseDto boardDetail(Long id) {

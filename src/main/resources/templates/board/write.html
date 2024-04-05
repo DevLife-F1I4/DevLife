@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <link rel="stylesheet" th:href="@{/css/write.css}">
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
+  <meta charset="UTF-8">
+  <title>개발생활</title>
+</head>
+<body>
+
+<aside>
+  <ul class="tree-view">
+    <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
+    <li style="font-weight: bold">
+      <a href="#components" >Category</a>
+
+      <ul>
+        <li><a th:href="@{/mypage}" th:if="${account != null}">마이페이지</a></li>
+        <li><a th:href="@{/login}" th:if="${account == null}">로그인</a></li>
+        <li ><a id="logout-link" th:href="@{/user/logout}" th:if="${account != null}">로그아웃</a></li>
+        <li><a th:href="@{/signup}" th:if="${account == null}">회원가입</a></li>
+        <li>
+          <a href="#window">게시판</a>
+          <ul>
+            <li><a href="#title-bar">개발자 도구</a></li>
+            <li><a href="#window-contents">개발자네 개팔자</a></li>
+            <li><a href="#status-bar">고독한 개발자</a></li>
+          </ul>
+        </li>
+        <li><a th:href="@{/board}" th:if="${account != null}">글쓰기</a></li>
+      </ul>
+    </li>
+    <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
+  </ul>
+</aside>
+
+<main>
+  <h1 style="font-family: DungGeunMo,serif">개발생활</h1>
+
+  <div class="window">
+    <div class="title-bar">
+      <div class="title-bar-text">게시글 작성 </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Maximize"></button>
+        <button aria-label="Close"></button>
+      </div>
+    </div>
+    <form class="write-form" action="/board/write" method="post">
+      <div class="form-group">
+        <div class="category">
+          <label for="category">카테고리</label>
+          <select id="category" name="category" th:field="*{category}">
+            <option th:each="category : ${category}" th:value="${category}" th:text="${category}"></option>
+          </select>
+        </div>
+        <div class="field-row-stacked">
+          <label for="title">제목</label>
+          <input id="title" type="text" required>
+        </div>
+        <div class="field-row-stacked">
+          <label for="content">내용</label>
+          <textarea id="content" rows="8" required></textarea>
+        </div>
+        <!--      <div class="form-floating mb-3">-->
+        <!--        <input type="file" name="files" class="form-control" id="files" multiple>-->
+        <!--        <label for="files">이미지 업로드</label>-->
+        <!--      </div>-->
+      </div>
+      <button type="submit" class="btn btn-primary">등록</button>
+    </form>
+  </div>
+</main>
+
+</body>
+</html>
