@@ -52,7 +52,7 @@ public class AuthApiController {
         HttpCookie refreshCookie = ResponseCookie.from("refresh-token", tokenDto.getRefreshToken())
                 .maxAge(COOKIE_EXPIRATION)
                 .sameSite("None")
-                .httpOnly(true)
+                .httpOnly(false)
                 .secure(true)
                 .path("/")
                 .build();
@@ -61,7 +61,7 @@ public class AuthApiController {
         HttpCookie accessCookie = ResponseCookie.from("access-token", tokenDto.getAccessToken())
                 .maxAge(COOKIE_EXPIRATION)
                 .sameSite("None")
-                .httpOnly(true)
+                .httpOnly(false)
                 .secure(true)
                 .path("/")
                 .build();
