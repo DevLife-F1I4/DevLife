@@ -60,7 +60,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 
     // H2 (for local test)
-    runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {

@@ -30,6 +30,7 @@
             <li><a href="#status-bar">고독한 개발자</a></li>
           </ul>
         </li>
+        <li><a th:href="@{/board/write}" th:if="${account != null}">글쓰기</a></li>
       </ul>
     </li>
     <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
