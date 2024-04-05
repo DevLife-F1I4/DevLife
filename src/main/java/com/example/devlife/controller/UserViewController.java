@@ -19,6 +19,7 @@ public class UserViewController {
     public String mainPage(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
                            User account, Model model){
         if(account != null) {
+            log.info("유저 아이디 : " + account.getProviderId());
             model.addAttribute("account", account);
         }
 
