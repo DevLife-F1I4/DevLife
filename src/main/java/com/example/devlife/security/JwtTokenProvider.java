@@ -31,7 +31,7 @@ public class JwtTokenProvider implements InitializingBean {
     private final RedisService redisService;
     private static final String AUTHORITIES_KEY = "role";
     private static final String PROVIDER_ID_KEY = "providerId";
-    private static final String url = "https://43.203.66.162:8080";
+    private static final String url = "http://43.203.66.162:8080";
     //private static final String url = "https://localhost:8080";
 
     @Value("${jwt.secret}")
@@ -139,10 +139,10 @@ public class JwtTokenProvider implements InitializingBean {
     // Filter에서 사용
     public boolean validateAccessToken(String accessToken) {
         try {
-            if (redisService.getValues(accessToken) != null // NPE 방지
+            /*if (redisService.getValues(accessToken) != null // NPE 방지
                     && redisService.getValues(accessToken).equals("logout")) { // 로그아웃했을 경우 = blacklist에 accessToken이 존재하는 경우
                 return false;
-            }
+            }*/
             Jwts.parserBuilder()
                     .setSigningKey(signingKey)
                     .build()
