@@ -54,13 +54,13 @@ public class AuthService {
     @Transactional
     public AuthDto.TokenDto generateToken(String provider, String providerId, Authentication authentication) {
         // Refresh Token이 이미 있을 경우
-        if (redisService.getValues("RT(" + provider + "):" + providerId) != null) {
+        /*if (redisService.getValues("RT(" + provider + "):" + providerId) != null) {
             redisService.deleteValues("RT(" + provider + "):" + providerId); // 삭제
-        }
+        }*/
 
         // Access Token, Refresh Token 생성 및 Redis에 Refresh Token 저장
         AuthDto.TokenDto tokenDto = jwtTokenProvider.createToken(providerId, authentication);
-        saveRefreshToken(provider, providerId, tokenDto.getRefreshToken());
+       // saveRefreshToken(provider, providerId, tokenDto.getRefreshToken());
         return tokenDto;
     }
 
@@ -149,14 +149,15 @@ public class AuthService {
         // 1. Access Token 가져옴
         String requestAccessToken = resolveToken(request);
 
-        // 2. Access Token에 담겨 있는 사용자 정보 가져옴
+        // 2. Access
+        // Token에 담겨 있는 사용자 정보 가져옴
         String principal = jwtTokenProvider.getAuthentication(requestAccessToken).getName();
 
         // 3. 해당 사용자의 refresh token이 redis에 있는지 확인 --> 있다면 Refresh Token 삭제
-        String refreshTokenInRedis = redisService.getValues("RT(" + SERVER + "):" + principal);
+        /*String refreshTokenInRedis = redisService.getValues("RT(" + SERVER + "):" + principal);
         if (refreshTokenInRedis != null) {
             redisService.deleteValues("RT(" + SERVER + "):" + principal);
-        }
+        }*/
 
         // 4. Redis에 로그아웃 처리한 AccessToken 저장 --> blackList로 저장 --> access token이 blacklist에 존재하는지 확인
         /*Long expiration = jwtTokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();
