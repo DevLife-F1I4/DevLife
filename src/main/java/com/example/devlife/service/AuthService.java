@@ -158,10 +158,9 @@ public class AuthService {
             redisService.deleteValues("RT(" + SERVER + "):" + principal);
         }
 
-        // 4. Redis에 로그아웃 처리한 AccessToken 저장 --> blackList로 저장
-        Long expiration = jwtTokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();
-        redisService.setValuesWithTimeout(requestAccessToken, "logout", expiration);
-
-
+        // 4. Redis에 로그아웃 처리한 AccessToken 저장 --> blackList로 저장 --> access token이 blacklist에 존재하는지 확인
+        /*Long expiration = jwtTokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();
+        log.info("만료시간 : " + expiration);
+        redisService.setValuesWithTimeout(requestAccessToken, "logout", expiration);*/
     }
 }

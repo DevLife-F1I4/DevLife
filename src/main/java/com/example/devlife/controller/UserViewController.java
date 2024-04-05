@@ -43,4 +43,13 @@ public class UserViewController {
         }
         return "mypage";
     }
+    @GetMapping("/edit-nickname")
+    public String showEditNicknameForm(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
+                                           User account, Model model) {
+        // 사용자의 닉네임 정보를 가져와서 모델에 추가
+        String nickname = account.getNickname(); // 예시: userService에서 현재 사용자의 닉네임을 가져오는 메서드
+        model.addAttribute("nickname", nickname);
+        return "edit-nickname"; // HTML 파일 이름 리턴
+    }
+
 }

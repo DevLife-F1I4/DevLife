@@ -3,13 +3,17 @@ package com.example.devlife.service.board;
 import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
 import com.example.devlife.entity.Board;
+import com.example.devlife.entity.Category;
 import com.example.devlife.entity.User;
+import com.example.devlife.exception.UserNotFoundException;
 import com.example.devlife.repository.board.BoardRepository;
 import com.example.devlife.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +24,10 @@ public class BoardService {
     @Transactional
     public Long saveBoard(BoardWriteRequestDto newboardWriteRequestDto,
                           String providerid) {
-        User user = userRepository.findByProviderId(providerid).orElseThrow(() -> new UsernameNotFoundException("권한이 없습니다."));
+
+        User user = userRepository.findByProviderId(providerid);
+
+        if(user == null) throw new UserNotFoundException();
 
         Board result = Board.builder()
                 .category(newboardWriteRequestDto.getCategory())
@@ -28,15 +35,22 @@ public class BoardService {
                 .content(newboardWriteRequestDto.getContent())
                 .user(user)
                 .build();
-        return null;
+        boardRepository.save(result);
+        return result.getId();
     }
 
+    public List<Board> findAll(){
+        return boardRepository.findAll();
+    }
+
+    public List<Board> findAllByCategory(Category category){
+        return boardRepository.findByCategory(category);
+    }
     public BoardResponseDto boardDetail(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         BoardResponseDto result = BoardResponseDto.builder()
                 .board(board)
                 .build();
-
         return result;
     }
 

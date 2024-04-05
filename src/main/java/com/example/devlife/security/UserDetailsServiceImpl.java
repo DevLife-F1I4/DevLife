@@ -20,7 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String providerId) throws UsernameNotFoundException {
         User findUser = userRepository.findByProviderId(providerId);
-        log.info("아이디 loadUserByUsername : " + findUser.getProviderId());
         if(findUser == null){
             throw new UsernameNotFoundException(providerId);
         }

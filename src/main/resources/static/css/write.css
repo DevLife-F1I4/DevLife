@@ -1,9 +1,15 @@
+@font-face {
+    font-family: 'DungGeunMo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    
     margin: 0;
     padding: 0;
     background: #c0c0c0;
-  }
+}
 
 aside {
     width: 200px;
@@ -13,8 +19,8 @@ aside {
     padding: 8px;
     display: flex;
     align-items: stretch;
-  }
-  
+}
+
 aside .tree-view {
     width: 100%;
     /* TODO: Move scrollbar into the recessed region? */
@@ -28,26 +34,6 @@ main{
 
 .window{
     width: 800px;
-    height: 300px;
     margin-top: 40px;
 }
 
-.status-bar{
-    margin-top: 100px;
-}
-
-.field-row-stacked{
-    margin-left: 400px;
-}
-
-.sunken-panel{
-    margin-top: 40px;
-    margin-left: 300px;
-    margin-right: 300px;
-    height: 120px; 
-    width: 840px;
-}
-
-#update-nickname-btn{
-    margin-left: 20px;
-}

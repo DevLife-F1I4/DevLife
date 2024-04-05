@@ -32,10 +32,11 @@ public class UserApiController {
      * 내 정보 수정 (닉네임 수정)
      */
     @PutMapping("/user/me")
-    public ResponseEntity<?> updateMyInfo(@AuthenticationPrincipal User userAccount,
+    public ResponseEntity<?> updateMyInfo(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
+                                              User account,
                                           @Valid @RequestBody UserInfoDto.UserRequest request) {
-        log.info("로그인 유저 아이디 " + userAccount.getProviderId());
-        userService.updateUserInfo(userAccount.getProviderId(), request );
+        log.info("로그인 유저 아이디 " + account.getProviderId());
+        userService.updateUserInfo(account.getProviderId(), request );
         return ResponseEntity.noContent().build();
     }
 
