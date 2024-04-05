@@ -1,6 +1,7 @@
 package com.example.devlife.controller;
 
 import com.example.devlife.entity.Board;
+import com.example.devlife.entity.Category;
 import com.example.devlife.entity.User;
 import com.example.devlife.service.board.BoardService;
 import com.example.devlife.service.comment.CommentService;
@@ -27,6 +28,16 @@ public class BoardListController {
                           @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         //DB에서 전체 게시글 데이터 가져온 후 list.html에 표시
         List<Board> boardList = boardService.findAll();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("account", account);
+        return "board/list";
+    }
+
+    @GetMapping("/list/{category}")
+    public String findAllByACategory(Model model, @PathVariable Category category,
+                          @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
+        //DB에서 전체 게시글 데이터 가져온 후 list.html에 표시
+        List<Board> boardList = boardService.findAllByCategory(category);
         model.addAttribute("boardList", boardList);
         model.addAttribute("account", account);
         return "board/list";
