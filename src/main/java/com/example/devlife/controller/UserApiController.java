@@ -33,8 +33,7 @@ public class UserApiController {
      */
     @PutMapping("/user/me")
     public ResponseEntity<?> updateMyInfo(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
-                                              User account,
-                                          @Valid @RequestBody UserInfoDto.UserRequest request) {
+                                              User account, @Valid @RequestBody UserInfoDto.UserRequest request) {
         log.info("로그인 유저 아이디 " + account.getProviderId());
         userService.updateUserInfo(account.getProviderId(), request );
         return ResponseEntity.noContent().build();
