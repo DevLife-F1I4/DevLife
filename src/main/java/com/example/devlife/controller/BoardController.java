@@ -3,10 +3,13 @@ package com.example.devlife.controller;
 import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
 import com.example.devlife.entity.Category;
+import com.example.devlife.entity.Comment;
 import com.example.devlife.entity.User;
 import com.example.devlife.repository.user.UserRepository;
 import com.example.devlife.security.UserDetailsImpl;
 import com.example.devlife.service.board.BoardService;
+import com.example.devlife.service.comment.CommentService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -23,6 +27,7 @@ import java.util.Objects;
 public class BoardController {
     private final BoardService boardService;
     private final UserRepository userRepository;
+    private final CommentService commentService;
 
     //글작성 GET
     @GetMapping("/write")
@@ -48,12 +53,21 @@ public class BoardController {
 
     //글상세 GET
     @GetMapping("/{id}")
-    public String boardDetail(@PathVariable Long id, Model model) {
+    public String boardDetail(
+    		@AuthenticationPrincipal (expression = "#this == 'anonymousUser' ? null : account") User user,
+    		@PathVariable Long id, Model model) {
         BoardResponseDto result = boardService.boardDetail(id);
 
         model.addAttribute("dto", result);
         model.addAttribute("board_id", id);
-
+        
+        List<Comment> comments = commentService.getComments(id);
+		comments.sort((c1, c2)->Long.compare(c1.getId(), c2.getId()));
+		model.addAttribute("comments", comments);
+		if (user != null) {
+			model.addAttribute("account", user);
+		}
+        
         return "board/detail";
     }
 
