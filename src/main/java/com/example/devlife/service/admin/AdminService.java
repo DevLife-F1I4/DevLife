@@ -22,15 +22,14 @@ public class AdminService {
 	private final CommentRepository commentRepository;
 
 	@Transactional
-	public void deleteUser(String providerId) throws UserNotFoundException {
+	public void deleteUser(String providerId, Boolean flag) throws UserNotFoundException {
 		User user = userRepository.findByProviderId(providerId);
 		if(user==null) throw new UserNotFoundException();
-		user.withdrawUser(true);
+		user.withdrawUser(flag);
 	}
-
+	
 	public User getUser(String providerId) throws UserNotFoundException{
 		User user = userRepository.findByProviderId(providerId);
-		if(user==null) throw new UserNotFoundException();
 		return user;
 	}
 
