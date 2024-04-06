@@ -43,7 +43,7 @@ public class BoardController {
                                  User account,
                                  @RequestBody BoardWriteRequestDto boardWriteRequestDto) {
         boardService.saveBoard(boardWriteRequestDto, account.getProviderId());
-        return "redirect:/";
+        return "redirect:/board/list";
     }
 
     //글상세 GET

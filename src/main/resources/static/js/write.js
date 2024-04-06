@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     alert("게시물 작성 완료");
-                    window.location.replace('/main');
+                    window.location.replace('/board/list');
                 } else {
                     alert("게시물 작성 실패");
                 }
