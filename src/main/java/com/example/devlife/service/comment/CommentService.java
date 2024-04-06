@@ -12,22 +12,23 @@ import com.example.devlife.entity.Comment;
 import com.example.devlife.entity.User;
 import com.example.devlife.repository.board.BoardRepository;
 import com.example.devlife.repository.comment.CommentRepository;
+import com.example.devlife.repository.user.UserRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
 	private final CommentRepository commentRepository;
 	private final BoardRepository boardRepository;
-	public CommentService(CommentRepository commentRepository, BoardRepository boardRepository) {
-		this.commentRepository = commentRepository;
-		this.boardRepository = boardRepository;
-	}
-
+	private final UserRepository userRepository;
+	
 	public Comment save(User user, Long boardId, AddCommentRequest request) {
 		Board board = boardRepository.findById(boardId)
 			.orElseThrow(() -> new IllegalArgumentException("not found: " + boardId));
-		return commentRepository.save(request.toEntity(user, board));
+		Comment comment = request.toEntity(user, board);
+		return commentRepository.save(comment);
 	}
 
 	public List<Comment> getComments(Long boardId) {
@@ -36,6 +37,12 @@ public class CommentService {
 		return board.getCommentList();
 	}
 
+	public Comment getComment(Long commentId) {
+		Comment comment = commentRepository.findById(commentId)
+				.orElseThrow(()->new IllegalArgumentException("not found comment: " + commentId));
+		return comment;
+	}
+	
 	public void deleteComment(Long commentId) {
 		commentRepository.deleteById(commentId);
 	}

@@ -26,3 +26,18 @@ aside .tree-view {
     /* TODO: Move scrollbar into the recessed region? */
     overflow-y: scroll;
 }
+
+.main {
+	position: absolute;
+	margin-left: 220px;
+	width: calc(100% - 220px);
+}
+
+.window{
+    width: 80%;
+   	margin: 10px 10% 0 10%;
+}
+
+.inner-window{
+	padding: 10px 10px 10px 10px;
+}

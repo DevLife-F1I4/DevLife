@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/layout.html}">
+<head>
+	<link rel="stylesheet" th:href="@{/css/admin.css}">
+	<title>댓글</title>
+</head>
+<body>
+    <div layout:fragment="content">
+		<div class="main">
+	        <div class="window">
+				<div class="title-bar">
+					<div class="title-bar-text" id="title-bar" name="title-bar"><span>관리자</span></div>
+					
+					<div class="title-bar-controls">
+						<button aria-label="Minimize"></button>
+						<button aria-label="Maximize"></button>
+						<button aria-label="Close"></button>
+					</div>
+				</div>
+				<div class="inner-window">
+					<div>
+						<label for="user">회원 ID: </label>
+						<input name="user" type="text">
+						<button onclick="search_user()">검색</button>
+						<div th:if="${user != null}">
+							<p>ID: <span id="userid" th:text="${user.getProviderId()}"></span> </p>
+							<p>닉네임: <span th:text="${user.getNickname()}" ></span>
+								
+							</p>
+							<p>등급:
+								<select id="user-grade">
+									<option th:selected="${#strings.equals(user.getGrade(), 'F1')}" value="F1">F1</option>
+									<option th:selected="${#strings.equals(user.getGrade(), 'F2')}" value="F2">F2</option>
+									<option th:selected="${#strings.equals(user.getGrade(),'F3')}" value="F3">F3</option>
+								</select>
+								<button onclick="changeGrade()">등급변경</button>
+							</p>
+							
+							<p>역할: <span th:text="${user.getRole()}" id="userRole"></span></p>
+							<p>탈퇴여부: <span th:text="${user.isWithdraw()}" id="userWithdraw"></span>
+								<button th:if=${!user.isWithdraw()} onclick="withdraw(1)">탈퇴</button>
+								<button th:if=${user.isWithdraw()} onclick="withdraw(0)">탈퇴해제</button>
+							</p>
+							<p>가입: <span th:text="${user.getCreatedAt()}" id="userCreatedAt"></span></p>
+							<p>수정: <span th:text="${user.getUpdatedAt()}" id="userUpdatedAt"></span	></p>
+						</div>
+						
+					</div>
+				</div>
+				
+			</div>
+		</div>
+    </div>
+</body>
+</html>
