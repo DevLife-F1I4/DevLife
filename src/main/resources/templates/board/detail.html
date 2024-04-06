@@ -20,12 +20,12 @@
         <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
         <li style="font-weight: bold">
             <a href="#components" >Category</a>
-
             <ul>
                 <li><a th:href="@{/mypage}" th:if="${account != null}">마이페이지</a></li>
                 <li><a th:href="@{/login}" th:if="${account == null}">로그인</a></li>
                 <li ><a id="logout-link" th:href="@{/user/logout}" th:if="${account != null}">로그아웃</a></li>
                 <li><a th:href="@{/signup}" th:if="${account == null}">회원가입</a></li>
+
                 <li>
                     <a href="#window">게시판</a>
                     <ul>
@@ -57,6 +57,8 @@
         </div>
 
         <div class="content" id="content" name="content">[[${dto.getContent()}]]</div>
+        <button id="edit-btn" style="width: 100px; font-weight: bold">수정</button>
+        <button id="delete-btn" style="width: 100px; font-weight: bold">삭제</button>
 
         <div class="status-bar">
             <p class="status-bar-field">작성자:
@@ -76,6 +78,7 @@
             </p>
         </div>
     </div>
+
 </div>
 
 <div layout:fragment="comment">
@@ -127,5 +130,7 @@
 		</div>
     </div>
 	</div>
+
+  <script th:src="@{/js/detail.js}"></script>
 </body>
 </html>

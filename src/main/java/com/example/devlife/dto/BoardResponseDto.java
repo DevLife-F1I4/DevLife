@@ -3,16 +3,15 @@ package com.example.devlife.dto;
 import com.example.devlife.entity.Board;
 import com.example.devlife.entity.Category;
 import com.example.devlife.entity.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BoardResponseDto {
     private Long id;
     private Category category;

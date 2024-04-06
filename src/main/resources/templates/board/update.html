@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <link rel="stylesheet" th:href="@{/css/write.css}">
+    <link rel="stylesheet" th:href="@{/css/update.css}">
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
     <meta charset="UTF-8">
     <title>개발생활</title>
@@ -48,27 +48,30 @@
                 <button aria-label="Close"></button>
             </div>
         </div>
-        <form class="write-form" action="/board" method="post">
+        <form class="update-form" action="/board" method="post">
             <div class="form-group">
+                <div class="id">
+                    <input id="id" type="hidden" th:value="${dto.getId()}">
+                </div>
                 <div class="category">
                     <label for="category">카테고리</label>
-                    <select id="category" name="category">
-                        <option option th:each="cat : ${category}" th:value="${category}" th:text="${category}"></option>
+                    <select id="category" name="category" th:field="*{category}">
+                        <option th:each="category : ${category}" th:value="${category}" th:text="${category.description}"></option>
                     </select>
                 </div>
                 <div class="field-row-stacked">
                     <label for="title">제목</label>
-                    <input id="title" type="text" th:value="${dto.title}" required>
+                    <input id="title" type="text" th:value="${dto.getTitle()}" required>
                 </div>
                 <div class="field-row-stacked">
                     <label for="content">내용</label>
-                    <textarea id="content" rows="8" required>[[${dto.content}]]</textarea>
+                    <textarea id="content" rows="8" required>[[${dto.getContent()}]]</textarea>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">등록</button>
         </form>
     </div>
 </main>
-
+<script th:src="@{/js/update.js}"></script>
 </body>
 </html>

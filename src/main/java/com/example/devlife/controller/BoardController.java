@@ -48,7 +48,7 @@ public class BoardController {
                                  User account,
                                  @RequestBody BoardWriteRequestDto boardWriteRequestDto) {
         boardService.saveBoard(boardWriteRequestDto, account.getProviderId());
-        return "redirect:/";
+        return "redirect:/board/list";
     }
 
     //글상세 GET
@@ -56,6 +56,7 @@ public class BoardController {
     public String boardDetail(
     		@AuthenticationPrincipal (expression = "#this == 'anonymousUser' ? null : account") User user,
     		@PathVariable Long id, Model model) {
+
         BoardResponseDto result = boardService.boardDetail(id);
 
         model.addAttribute("dto", result);
@@ -80,6 +81,9 @@ public class BoardController {
             return "redirect:/";
         }
 
+        if(account != null) {
+            model.addAttribute("account", account);
+        }
         model.addAttribute("dto", result);
         model.addAttribute("board_id", id);
         model.addAttribute("category", Category.values());
