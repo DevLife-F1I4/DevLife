@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+    <meta charset="UTF-8">
+</head>
+<body>
+	
+    <aside>
+        <ul class="tree-view">
+            <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
+            <li style="font-weight: bold">
+                <a href="#components" >Category</a>
+                <ul>
+                    <li><a th:href="@{/mypage}" sec:authorize="hasRole('USER')">마이페이지</a></li>
+                    <li><a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a></li>
+                    <li><a th:href="@{/user/logout}" sec:authorize="isAuthenticated()">로그아웃</a></li>
+                    <li><a th:href="@{/signup}" sec:authorize="isAnonymous()">회원가입</a></li>
+                    <li>
+                        <a href="#window">게시판</a>
+                        <ul>
+                            <li><a th:href="@{/board/list}">글 전체 조회</a></li>
+                            <li><a th:href="@{/board/list/DEVTOOL}">개발자 도구</a></li>
+                            <li><a th:href="@{/board/list/PET}">개발자네 개팔자</a></li>
+                            <li><a th:href="@{/board/list/GOURMET}">고독한 개발자</a></li>
+                        </ul>
+                    </li>
+                    <li><a th:href="@{/board/write}" sec:authorize="isAuthenticated()">글쓰기</a></li>
+                </ul>
+            </li>
+            <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
+        </ul>
+    </aside>
+
+    <main>
+		<div layout:fragment="content"></div>
+    </main>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:src="@{/js/login.js}"></script>
+    <script th:src="@{/js/logout.js}"></script>
+	<script th:src="@{/js/comment.js}"></script>
+</body>
+</html>
