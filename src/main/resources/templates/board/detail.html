@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	      layout:decorate="~{board/layout.html}">
+	  	
 <head>
     <link rel="stylesheet" th:href="@{/css/detail.css}">
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
+	<link rel="stylesheet" th:href="@{/css/comment.css}">
     <meta charset="UTF-8">
     <title>
         개발생활 | [[${dto.getTitle()}]]
@@ -38,7 +42,8 @@
     </ul>
 </aside>
 
-<main>
+<div layout:fragment="content">
+<div class="main">
     <h1 style="font-family: DungGeunMo,serif">개발생활</h1>
 
     <div class="window">
@@ -71,7 +76,56 @@
             </p>
         </div>
     </div>
-</main>
+</div>
 
+<div layout:fragment="comment">
+		<div class="main">
+	        <div class="window">
+				<div class="title-bar">
+					<div class="title-bar-text" id="title-bar" name="title-bar"><span>댓글</span></div>
+					
+					<div class="title-bar-controls">
+						<button aria-label="Minimize"></button>
+						<button aria-label="Maximize"></button>
+						<button aria-label="Close"></button>
+					</div>
+				</div>
+				<div class="comment-form status-bar">
+					<div class="status-bar-field status-bar-left">
+						<textarea class="comment-content" name="comment-content" rows="3"></textarea>	
+					</div>
+					<div class="status-bar-field status-bar-right">
+						<button class="submit-comment" th:onclick="|writeComment(${board_id})|">댓글 달기</button>
+					</div>
+				</div>
+				<div th:each="comment : ${comments}" class="status-bar">
+					<div class="status-bar-field  status-bar-left">
+						<div class="comment-body" th:id="|comment-body-${comment.getId()}|">
+							<span>작성자: <strong th:text="${comment.getUser().getNickname()}"></strong></span>
+							<p th:id="|content-${comment.getId()}|" th:text="${comment.getContent()}"></p>
+						</div>
+						<div style="display:none;" class="comment-body" th:id="|comment-modify-${comment.getId()}|">
+							<textarea th:id="|comment-content-${comment.getId()}|"></textarea>
+						</div>
+					</div>
+					<div class="status-bar-field status-bar-right">
+						<div class="divide2 status-bar">
+							<div class="comment-control status-bar-field">
+								<span th:text="${#temporals.format(comment.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></span>
+							</div>
+						</div>						
+						<div class="divide2 status-bar">
+							<div class="comment-control status-bar-field">
+								<button th:onclick="|mode_modify(${comment.getId()})|">수정</button>
+								<button th:onclick="|deleteComment(${comment.getId()})|">삭제</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+    </div>
+	</div>
 </body>
 </html>
