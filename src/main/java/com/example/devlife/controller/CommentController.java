@@ -1,5 +1,6 @@
 package com.example.devlife.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -23,18 +24,18 @@ import com.example.devlife.entity.Comment;
 import com.example.devlife.entity.User;
 import com.example.devlife.service.comment.CommentService;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class CommentController {
 	private final CommentService commentService;
-
-	public CommentController(CommentService commentService) {
-		this.commentService = commentService;
-	}
 
 	@PostMapping("/api/comment/{boardId}")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Comment> addComment(
-			@AuthenticationPrincipal User user,
+			@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User user,
 			@PathVariable(value = "boardId") Long boardId,
 			@RequestBody AddCommentRequest request) {
 		Comment savedComment = commentService.save(user, boardId, request);
@@ -46,13 +47,14 @@ public class CommentController {
 	public ResponseEntity<List<Comment>> readComment(
 			@PathVariable(value = "boardId") Long boardId) {
 		List<Comment> comments = commentService.getComments(boardId);
+		
 		return ResponseEntity.ok().body(comments);
 	}
 
 	@PatchMapping("/api/comment/{commentId}")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Comment> updateComment(
-			@AuthenticationPrincipal User user,
+			@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User user,
 			@PathVariable(value = "commentId") Long commentId,
 			@RequestBody UpdateCommentRequest request) {
 		Comment originalComment = commentService.getComment(commentId);
@@ -66,7 +68,7 @@ public class CommentController {
 	@DeleteMapping("/api/comment/{commentId}")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Void> deleteComment(
-			@AuthenticationPrincipal User user,
+			@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User user,
 			@PathVariable(value = "commentId") Long commentId) {
 		Comment originalComment = commentService.getComment(commentId);
 		if (originalComment.getUser().getId() != user.getId()) {
