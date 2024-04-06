@@ -36,6 +36,12 @@ public class CommentService {
 		return board.getCommentList();
 	}
 
+	public Comment getComment(Long commentId) {
+		Comment comment = commentRepository.findById(commentId)
+				.orElseThrow(()->new IllegalArgumentException("not found comment: " + commentId));
+		return comment;
+	}
+	
 	public void deleteComment(Long commentId) {
 		commentRepository.deleteById(commentId);
 	}
