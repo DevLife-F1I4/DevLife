@@ -50,32 +50,25 @@ function editBoard() {
     const user = document.getElementById('user');
     const boardUser = document.getElementById('board-user');
 
-    if(user === boardUser) {
-        // GET 요청 전송
-        fetch(editUrl, {
-            method: 'GET',
+    // GET 요청 전송
+    fetch(editUrl, {
+        method: 'GET',
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                location.href = editUrl;
+            } else {
+                alert('수정 실패: ' + response.statusText);
+            }
         })
-            .then((response) => {
-                if (response.status === 200) {
-                    location.href = editUrl;
-                } else {
-                    alert('수정 실패: ' + response.statusText);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                alert('오류 발생. 다시 시도해주세요.');
-            });
-    }else{
-        alert('다른 회원의 글은 수정할 수 없습니다.');
-    }
-
-
+        .catch((error) => {
+            console.error(error);
+            alert('오류 발생. 다시 시도해주세요.');
+        });
 }
 
 function deleteBoard() {
     const deleteUrl = window.location.pathname;
-    // const result = window.confirm('삭제시 복구할 수 없습니다. 정말 삭제하시겠습니까?');
 
     if(window.confirm('삭제시 복구할 수 없습니다. 정말 삭제하시겠습니까?')){
         // DELETE 요청 전송
@@ -87,7 +80,7 @@ function deleteBoard() {
                     location.href = '/board/list';
                 } else {
                     // alert('삭제 실패: ' + response.statusText);
-                    location.href = '/board/list';
+                    location.href = 'YouShallNotPass';
                 }
             })
             .catch((error) => {
@@ -95,5 +88,4 @@ function deleteBoard() {
                 alert('오류 발생. 다시 시도해주세요.');
             });
     }
-
 }
