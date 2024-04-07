@@ -139,10 +139,10 @@ public class JwtTokenProvider implements InitializingBean {
     // Filter에서 사용
     public boolean validateAccessToken(String accessToken) {
         try {
-            if (redisService.getValues(accessToken) != null // NPE 방지
+            /*if (redisService.getValues(accessToken) != null // NPE 방지
                     && redisService.getValues(accessToken).equals("logout")) { // 로그아웃했을 경우 = blacklist에 accessToken이 존재하는 경우
                 return false;
-            }
+            }*/
             Jwts.parserBuilder()
                     .setSigningKey(signingKey)
                     .build()

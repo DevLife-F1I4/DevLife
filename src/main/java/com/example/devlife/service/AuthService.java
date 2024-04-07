@@ -54,13 +54,13 @@ public class AuthService {
     @Transactional
     public AuthDto.TokenDto generateToken(String provider, String providerId, Authentication authentication) {
         // Refresh Token이 이미 있을 경우
-        if (redisService.getValues("RT(" + provider + "):" + providerId) != null) {
+        /*if (redisService.getValues("RT(" + provider + "):" + providerId) != null) {
             redisService.deleteValues("RT(" + provider + "):" + providerId); // 삭제
-        }
+        }*/
 
         // Access Token, Refresh Token 생성 및 Redis에 Refresh Token 저장
         AuthDto.TokenDto tokenDto = jwtTokenProvider.createToken(providerId, authentication);
-        saveRefreshToken(provider, providerId, tokenDto.getRefreshToken());
+        //saveRefreshToken(provider, providerId, tokenDto.getRefreshToken());
         return tokenDto;
     }
 
