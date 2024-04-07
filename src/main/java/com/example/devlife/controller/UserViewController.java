@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class UserViewController {
 
-    @GetMapping("/main")
+    @GetMapping(value = {"/", "/main"})
     public String mainPage(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
                            User account, Model model){
         if(account != null) {
