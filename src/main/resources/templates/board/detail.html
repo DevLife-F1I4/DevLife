@@ -48,7 +48,7 @@
 
     <div class="window">
         <div class="title-bar">
-            <div class="title-bar-text" id="title-bar" name="title-bar">[[${dto.getCategory().getDescription()}]] | [[${dto.getTitle()}]]</div>
+            <div class="title-bar-text">[[${dto.getCategory().getDescription()}]] | [[${dto.getTitle()}]]</div>
             <div class="title-bar-controls">
                 <button aria-label="Minimize"></button>
                 <button aria-label="Maximize"></button>
@@ -57,18 +57,21 @@
         </div>
 
         <div class="content" id="content" name="content">[[${dto.getContent()}]]</div>
-        <button id="edit-btn" style="width: 100px; font-weight: bold">수정</button>
-        <button id="delete-btn" style="width: 100px; font-weight: bold">삭제</button>
+<!--        <button id="edit-btn" style="width: 100px; font-weight: bold">수정</button>-->
+<!--        <button id="delete-btn" style="width: 100px; font-weight: bold">삭제</button>-->
+        <button th:onclick="|editBoard()|">수정</button>
+        <button th:onclick="|deleteBoard()|">삭제</button>
+
 
         <div class="status-bar">
             <p class="status-bar-field">작성자:
                 <span id="username" name="username">[[${dto.getUser().getNickname()}]]</span>
             </p>
             <p class="status-bar-field">작성일:
-                <span id="created-at" name="created-at">[[${dto.getCreatedAt()}]]</span>
+                <span id="created-at" name="created-at">[[${#temporals.format(dto.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}]]</span>
             </p>
             <p class="status-bar-field">수정일:
-                <span id="updated-at" name="updated-at">[[${dto.getUpdatedAt()}]]</span>
+                <span id="updated-at" name="updated-at">[[${#temporals.format(dto.getUpdatedAt(), 'yyyy-MM-dd HH:mm:ss')}]]</span>
             </p>
             <p class="status-bar-field">조회수:
                 <span id="hit" name="hit">[[${dto.getHit()}]]</span>
@@ -129,8 +132,8 @@
 			</div>
 		</div>
     </div>
-	</div>
+</div>
 
-  <script th:src="@{/js/detail.js}"></script>
+<!--<script th:src="@{/js/detail.js}"></script>-->
 </body>
 </html>
