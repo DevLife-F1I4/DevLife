@@ -13,11 +13,11 @@ import com.example.devlife.service.admin.AdminService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-@RequestMapping("/admin")
+@RequestMapping("/adminpage")
 @Controller
 public class AdminViewController {
 	private final AdminService adminService;
-	@GetMapping("/search")
+	@GetMapping("")
 	public String adminMain(
 			@AuthenticationPrincipal (expression = "#this == 'anonymousUser' ? null : account") User account,
 			Model model
@@ -28,7 +28,7 @@ public class AdminViewController {
 		return "admin/main";
 	}
 	
-	@GetMapping("/search/{providerId}")
+	@GetMapping("/{providerId}")
 	public String adminMain(
 			@AuthenticationPrincipal (expression = "#this == 'anonymousUser' ? null : account") User account,
 			@PathVariable(value = "providerId") String providerId,
