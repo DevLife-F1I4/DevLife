@@ -47,13 +47,13 @@ public class SecurityConfig {
 
                 // 인증, 인가 설정
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/login", "/signup", "/main",
-                                        "/css/**", "/js/**", "/board/list",
+                        auth.requestMatchers("/login", "/signup", "/main", "/",
+                                        "/css/**", "/js/**", "/board/list/**",
                                         "/api/login", "/api/signup/**",
                                         "/swagger-ui/**", "/api-docs/swagger-config").permitAll() // 인증 없이 접근 허용
-                                .requestMatchers("/admin/**", "/api/admin/**", 
+                                .requestMatchers("/admin/**", "/api/admin/**",
                                 		"/adminpage/**").hasRole("ADMIN") // ADMIN만 접근 가능
-                                .requestMatchers("/api/user/**").hasRole("USER")
+                                .requestMatchers("/api/user/**").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated())
 
                 // 로그인
