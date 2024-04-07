@@ -7,14 +7,11 @@ import com.example.devlife.entity.Comment;
 import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.User;
 import com.example.devlife.repository.user.UserRepository;
-import com.example.devlife.security.UserDetailsImpl;
 import com.example.devlife.service.board.BoardService;
 import com.example.devlife.service.comment.CommentService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +69,7 @@ public class BoardController {
 		}
 
         if(user.getGrade().ordinal() < result.getGrade().ordinal() && (!Objects.equals(user.getProviderId(), result.getUser().getProviderId())) ) {
-            return "board/board-YouShallNotPass";
+            return "board/YouShallNotPass";
         }
         else{
             return "board/detail";
@@ -85,7 +82,7 @@ public class BoardController {
                                   @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         BoardResponseDto result = boardService.boardDetail(id);
         if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
-            return "redirect:/";
+            return "board/YouShallNotPass";
         }
 
         if(account != null) {
@@ -109,15 +106,21 @@ public class BoardController {
 
     //글삭제
     @DeleteMapping("/{id}")
-    public String boardRemove(@PathVariable Long id,
+    public String boardRemove(@PathVariable Long id, Model model,
                               @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
-        BoardResponseDto result = boardService.boardDetail(id);
-        if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
-            return "redirect:/board/list";
+        if(account != null) {
+            model.addAttribute("account", account);
         }
 
-        boardService.deleteBoard(id);
+        BoardResponseDto result = boardService.boardDetail(id);
 
-        return "redirect:/board/list";
+        if (Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
+            boardService.deleteBoard(id);
+            return "redirect:/board/list";
+        }else{
+            return "board/YouShallNotPass";
+        }
+
+
     }
 }
