@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/list.css}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>글목록</title>
+    <link rel="stylesheet" href="https://unpkg.com/98.css" />
+
+
+
+</head>
+<body>
+<!--헤더-->
+<aside>
+    <ul class="tree-view">
+        <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
+        <li style="font-weight: bold">
+            <a href="#components" >Category</a>
+
+            <ul>
+                <li><a th:href="@{/mypage}" th:if="${account != null}">마이페이지</a></li>
+                <li><a th:href="@{/login}" th:if="${account == null}">로그인</a></li>
+                <li ><a id="logout-link" th:href="@{/user/logout}" th:if="${account != null}">로그아웃</a></li>
+                <li><a th:href="@{/signup}" th:if="${account == null}">회원가입</a></li>
+
+                <li>
+                    <a href="#window">게시판</a>
+                    <ul>
+                        <li><a th:href="@{/list}" th:if="${account == null}">글 전체 조회</a></li>
+                        <li><a href="#title-bar">개발자 도구</a></li>
+                        <li><a href="#window-contents">개발자네 개팔자</a></li>
+                        <li><a href="#status-bar">고독한 개발자</a></li>
+                    </ul>
+                </li>
+                <li><a th:href="@{/board/write}" th:if="${account != null}">글쓰기</a></li>
+            </ul>
+        </li>
+        <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
+    </ul>
+</aside>
+
+<main>
+    <h1 style="font-family: DungGeunMo,serif">개발생활</h1>
+
+    <div class="window" style="width: 300px">
+        <div class="title-bar">
+            <div class="title-bar-text">!경고!</div>
+            <div class="title-bar-controls">
+                <button aria-label="Minimize"></button>
+                <button aria-label="Maximize"></button>
+                <button aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="window-body">
+            <p>열람 권한이 없습니다.</p>
+        </div>
+        <button onclick="history.back()">돌아가기</button>
+    </div>
+</main>
+
+
+</body>
+
+</html>

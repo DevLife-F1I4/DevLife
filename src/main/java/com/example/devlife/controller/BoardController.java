@@ -70,8 +70,13 @@ public class BoardController {
 		if (user != null) {
 			model.addAttribute("account", user);
 		}
-        
-        return "board/detail";
+
+        if(user.getGrade().ordinal() < result.getGrade().ordinal()) {
+            return "board/board-YouShallNotPass";
+        }
+        else{
+            return "board/detail";
+        }
     }
 
     //글수정 GET
