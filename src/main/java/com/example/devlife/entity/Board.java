@@ -60,7 +60,7 @@ public class Board {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "board")
     private List<Comment> commentList;
 
     public void update(BoardWriteRequestDto dto) {
