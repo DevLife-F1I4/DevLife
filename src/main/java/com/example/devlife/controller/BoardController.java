@@ -71,7 +71,7 @@ public class BoardController {
 			model.addAttribute("account", user);
 		}
 
-        if(user.getGrade().ordinal() < result.getGrade().ordinal()) {
+        if(user.getGrade().ordinal() < result.getGrade().ordinal() && (!Objects.equals(user.getProviderId(), result.getUser().getProviderId())) ) {
             return "board/board-YouShallNotPass";
         }
         else{
@@ -81,7 +81,7 @@ public class BoardController {
 
     //글수정 GET
     @GetMapping("/{id}/update")
-    public String boardUpdateForm(@PathVariable Long id, Model model, Category category,
+    public String boardUpdateForm(@PathVariable Long id, Model model,
                                   @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         BoardResponseDto result = boardService.boardDetail(id);
         if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {

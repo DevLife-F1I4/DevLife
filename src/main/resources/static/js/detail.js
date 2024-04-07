@@ -47,22 +47,30 @@
 
 function editBoard() {
     const editUrl = location.href + '/update';
+    const user = document.getElementById('user');
+    const boardUser = document.getElementById('board-user');
 
-    // GET 요청 전송
-    fetch(editUrl, {
-        method: 'GET',
-    })
-        .then((response) => {
-            if (response.status === 200) {
-                location.href = editUrl;
-            } else {
-                alert('수정 실패: ' + response.statusText);
-            }
+    if(user === boardUser) {
+        // GET 요청 전송
+        fetch(editUrl, {
+            method: 'GET',
         })
-        .catch((error) => {
-            console.error(error);
-            alert('오류 발생. 다시 시도해주세요.');
-        });
+            .then((response) => {
+                if (response.status === 200) {
+                    location.href = editUrl;
+                } else {
+                    alert('수정 실패: ' + response.statusText);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('오류 발생. 다시 시도해주세요.');
+            });
+    }else{
+        alert('다른 회원의 글은 수정할 수 없습니다.');
+    }
+
+
 }
 
 function deleteBoard() {
