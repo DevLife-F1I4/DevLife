@@ -9,25 +9,34 @@
 * 24.03.25(월) ~ 24.04.08(월)
 
 ## 👨‍👧‍👧 프로젝트 팀 구성 및 역할
-- 팀장 윤수빈 - 사용자 인증(로그인 및 회원가입), 배포
-- 팀원 윤인선 - 글작성 
-- 팀원 임채민 - 댓글, 관리자
-- 팀원 최은서 - 글목록
-- 멘토 유상욱 - 프로젝트 진행 중 질의응답
+- 👩‍💻 팀장 [윤수빈](https://github.com/soogoori) - 사용자 인증(로그인 및 회원가입), 글 목록 조회, CI/CD 구축 및 배포
+- 👩‍💻 팀원 [윤인선](https://github.com/InseonYoon) - 글작성(등록, 수정, 삭제), 글 상세 조회  
+- 👩‍💻 팀원 [임채민](https://github.com/cmleem) - 댓글(등록, 수정, 삭제), 관리자 페이지 개발
+- 👩‍💻 팀원 [최은서](https://github.com/eundoechoi) - 글 목록 조회, 문서 작성
+- 👨‍🔧 멘토 유상욱 - 프로젝트 진행 중 질의응답
+
+## 🗺️ ERD
+![Oreumi10](https://github.com/DevLife-F1I4/DevLife/assets/81796258/1f7cc4e0-ec48-4584-afe9-173d5892d68b)
+
+## 📝 API 명세서
+[API 명세서](https://www.notion.so/oreumi/API-b233c229b77a42df9b320de074333b84)
+
 
 ## ⚙ 개발 환경
 - `JAVA 17`
-- **IDE** : IntelliJ IDEA
-- **Framework** : SpringBoot
-- **Database** : PostgreSQL
-- **Template** : Thymeleaf
+<img width="890" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/f39598c8-019a-4bfe-9856-aca5075128f4">
 
+## 🏛️ 아키텍처 
+<img width="612" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/2782f4fe-b21f-4b70-8746-e343d1e9440f">
+
+  
 ## 📍 주요 기능
 #### 로그인
-- DB 값 검증
+- Spring Security + JWT로 사용자 인증
 #### 회원가입
 - ID 중복 확인
 - 닉네임 중복 확인
+- 패스워드 및 ID 생성 시 조건 확인 
 #### 마이페이지
 - 내가 작성한 글, 댓글 조회
 - 내 정보 조회/수정(닉네임)
