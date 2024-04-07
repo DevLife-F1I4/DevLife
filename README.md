@@ -24,10 +24,12 @@
 
 ## ⚙ 개발 환경
 - `JAVA 17`
-<img width="890" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/f39598c8-019a-4bfe-9856-aca5075128f4">
+<img width="600" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/e4c41232-0904-4ede-8744-bebc74ba9f12">
+
 
 ## 🏛️ 아키텍처 
-<img width="612" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/2782f4fe-b21f-4b70-8746-e343d1e9440f">
+<img width="612" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/f6a87953-c6d7-41f5-89d4-37a924b33272">
+
 
   
 ## 📍 주요 기능
