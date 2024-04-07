@@ -67,5 +67,6 @@ public class Board {
         this.category = dto.getCategory();
         this.title = dto.getTitle();
         this.content = dto.getContent();
+        this.grade = dto.getGrade();
     }
 }
