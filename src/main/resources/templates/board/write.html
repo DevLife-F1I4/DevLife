@@ -70,15 +70,14 @@
           <label for="content">내용</label>
           <textarea id="content" rows="8" required></textarea>
         </div>
-        <!--      <div class="form-floating mb-3">-->
-        <!--        <input type="file" name="files" class="form-control" id="files" multiple>-->
-        <!--        <label for="files">이미지 업로드</label>-->
-        <!--      </div>-->
       </div>
       <button type="submit" class="btn btn-primary">등록</button>
     </form>
   </div>
 </main>
+
+<p id="user-grade" th:value="${account.getGrade().ordinal()}"></p>
+
 <script th:src="@{/js/write.js}"></script>
 <script th:src="@{/js/logout.js}"></script>
 
