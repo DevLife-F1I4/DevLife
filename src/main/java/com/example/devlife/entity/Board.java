@@ -30,7 +30,7 @@ public class Board {
     private Category category;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "grade"/*, nullable = false*/)
+    @Column(name = "grade", nullable = false)
     private Grade grade;
 
     @Column(name = "title", nullable = false)
