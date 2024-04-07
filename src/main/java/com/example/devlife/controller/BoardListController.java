@@ -30,7 +30,7 @@ public class BoardListController {
         List<Board> boardList = boardService.findAll();
         model.addAttribute("boardList", boardList);
         model.addAttribute("account", account);
-        return "/board/list";
+        return "board/list";
     }
 
     @GetMapping("/list/{category}")
@@ -40,6 +40,6 @@ public class BoardListController {
         List<Board> boardList = boardService.findAllByCategory(category);
         model.addAttribute("boardList", boardList);
         model.addAttribute("account", account);
-        return "/board/list";
+        return "board/list";
     }
 }
