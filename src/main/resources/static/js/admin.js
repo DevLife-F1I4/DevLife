@@ -1,5 +1,5 @@
 function search_user(){
-	location.href = "/admin/search/"+document.querySelector('input[name="user"]').value;
+	location.href = "/adminpage/"+document.querySelector('input[name="user"]').value;
 }
 
 function changeGrade(){
