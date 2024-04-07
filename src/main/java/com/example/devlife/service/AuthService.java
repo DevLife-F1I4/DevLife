@@ -153,10 +153,10 @@ public class AuthService {
         String principal = jwtTokenProvider.getAuthentication(requestAccessToken).getName();
 
         // 3. 해당 사용자의 refresh token이 redis에 있는지 확인 --> 있다면 Refresh Token 삭제
-        String refreshTokenInRedis = redisService.getValues("RT(" + SERVER + "):" + principal);
+        /*String refreshTokenInRedis = redisService.getValues("RT(" + SERVER + "):" + principal);
         if (refreshTokenInRedis != null) {
             redisService.deleteValues("RT(" + SERVER + "):" + principal);
-        }
+        }*/
 
         // 4. Redis에 로그아웃 처리한 AccessToken 저장 --> blackList로 저장 --> access token이 blacklist에 존재하는지 확인
         /*Long expiration = jwtTokenProvider.getTokenExpirationTime(requestAccessToken) - new Date().getTime();

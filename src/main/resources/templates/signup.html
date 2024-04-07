@@ -15,6 +15,7 @@
                 <a href="#components" >Category</a>
                 <ul>
                     <li><a th:href="@{/mypage}" sec:authorize="hasRole('USER')">마이페이지</a></li>
+                    <li><a th:href="@{/adminpage}" sec:authorize="hasRole('ADMIN')">관리자페이지</a></li>
                     <li><a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a></li>
                     <li ><a id="logout-link" th:href="@{/user/logout}" th:if="${account != null}">로그아웃</a></li>
                     <li><a th:href="@{/signup}" sec:authorize="isAnonymous()">회원가입</a></li>
@@ -65,5 +66,6 @@
     </main>
     <script th:src="@{/js/valid.js}"></script>
     <script th:src="@{/js/signup.js}"></script>
+
 </body>
 </html> 

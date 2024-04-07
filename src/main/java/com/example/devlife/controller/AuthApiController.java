@@ -64,12 +64,6 @@ public class AuthApiController {
                 .path("/")
                 .build();
 
-        /*return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, httpCookie.toString())
-                // AccessToken 저장
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenDto.getAccessToken())
-                .build();*/
-
         return ResponseEntity.status(HttpStatus.OK)
                 .header(HttpHeaders.SET_COOKIE, refreshCookie.toString())
                 // AccessToken 저장

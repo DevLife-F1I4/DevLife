@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
             })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('로그아웃 요청이 실패했습니다.');
+                        alert('로그아웃 요청이 실패했습니다.');
                     }
                     alert('로그아웃 성공');
                     window.location.href = '/main';
