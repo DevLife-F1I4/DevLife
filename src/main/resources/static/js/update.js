@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const url = '/board/' + document.getElementById('id').value;
         const category = document.getElementById('category').value;
+        const grade = document.getElementById('grade').value;
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
 
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             body: JSON.stringify({
                 id: id,
                 category: category,
+                grade: grade,
                 title: title,
                 content: content
             })

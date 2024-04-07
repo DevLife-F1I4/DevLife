@@ -67,23 +67,25 @@ function editBoard() {
 
 function deleteBoard() {
     const deleteUrl = window.location.pathname;
+    // const result = window.confirm('삭제시 복구할 수 없습니다. 정말 삭제하시겠습니까?');
 
-    alert('삭제시 복구할 수 없습니다. 정말 삭제하시겠습니까?');
-
-    // DELETE 요청 전송
-    fetch(deleteUrl, {
-        method: 'DELETE',
-    })
-        .then((response) => {
-            if (response.ok) {
-                location.href = '/board/list';
-            } else {
-                console.log(response.status);
-                alert('삭제 실패: ' + response.statusText);
-            }
+    if(window.confirm('삭제시 복구할 수 없습니다. 정말 삭제하시겠습니까?')){
+        // DELETE 요청 전송
+        fetch(deleteUrl, {
+            method: 'DELETE',
         })
-        .catch((error) => {
-            console.error(error);
-            alert('오류 발생. 다시 시도해주세요.');
-        });
+            .then((response) => {
+                if (response.ok) {
+                    location.href = '/board/list';
+                } else {
+                    // alert('삭제 실패: ' + response.statusText);
+                    location.href = '/board/list';
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('오류 발생. 다시 시도해주세요.');
+            });
+    }
+
 }

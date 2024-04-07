@@ -4,6 +4,7 @@ import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
 import com.example.devlife.entity.Category;
 import com.example.devlife.entity.Comment;
+import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.User;
 import com.example.devlife.repository.user.UserRepository;
 import com.example.devlife.security.UserDetailsImpl;
@@ -38,6 +39,7 @@ public class BoardController {
             model.addAttribute("account", account);
         }
         model.addAttribute("category", Category.values());
+        model.addAttribute("grade", Grade.values());
         return "board/write";
     }
 
@@ -87,6 +89,7 @@ public class BoardController {
         model.addAttribute("dto", result);
         model.addAttribute("board_id", id);
         model.addAttribute("category", Category.values());
+        model.addAttribute("grade", Grade.values());
 
         return "board/update";
     }
@@ -105,11 +108,11 @@ public class BoardController {
                               @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         BoardResponseDto result = boardService.boardDetail(id);
         if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
-            return "redirect:/";
+            return "redirect:/board/list";
         }
 
         boardService.deleteBoard(id);
 
-        return "redirect:/";
+        return "redirect:/board/list";
     }
 }

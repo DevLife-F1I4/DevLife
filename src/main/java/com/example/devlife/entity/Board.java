@@ -1,5 +1,6 @@
 package com.example.devlife.entity;
 
+import com.example.devlife.dto.BoardWriteRequestDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -27,6 +28,10 @@ public class Board {
     @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
     private Category category;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "grade"/*, nullable = false*/)
+    private Grade grade;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -58,8 +63,9 @@ public class Board {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     private List<Comment> commentList;
 
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public void update(BoardWriteRequestDto dto) {
+        this.category = dto.getCategory();
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
     }
 }
