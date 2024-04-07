@@ -113,11 +113,12 @@ public class BoardController {
         }
 
         BoardResponseDto result = boardService.boardDetail(id);
-        if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
-            return "board/YouShallNotPass";
-        }else{
+
+        if (Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
             boardService.deleteBoard(id);
             return "redirect:/board/list";
+        }else{
+            return "board/YouShallNotPass";
         }
 
 

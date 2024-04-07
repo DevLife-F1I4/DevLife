@@ -77,10 +77,10 @@ function deleteBoard() {
         })
             .then((response) => {
                 if (response.ok) {
-                    location.href = '/board/list';
+                    alert('다른 회원의 게시물은 삭제할 수 없습니다.')
                 } else {
-                    // alert('삭제 실패: ' + response.statusText);
-                    location.href = 'YouShallNotPass';
+                    alert('삭제되었습니다.')
+                    location.href = '/board/list';
                 }
             })
             .catch((error) => {
