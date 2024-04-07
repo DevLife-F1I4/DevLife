@@ -57,10 +57,9 @@
         </div>
 
         <div class="content" id="content" name="content">[[${dto.getContent()}]]</div>
-<!--        <button id="edit-btn" style="width: 100px; font-weight: bold">수정</button>-->
-<!--        <button id="delete-btn" style="width: 100px; font-weight: bold">삭제</button>-->
         <button th:onclick="|editBoard()|">수정</button>
         <button th:onclick="|deleteBoard()|">삭제</button>
+
 
 
         <div class="status-bar">
@@ -78,6 +77,9 @@
             </p>
             <p class="status-bar-field">좋아요:
                 <span id="board-like" name="board-like">[[${dto.getBoardLike()}]]</span>
+            </p>
+            <p class="status-bar-field">열람권한:
+                <span id="grade" name="grade">[[${dto.getGrade()}]]</span>
             </p>
         </div>
     </div>

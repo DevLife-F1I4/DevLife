@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
 
         const category = document.getElementById('category').value;
+        const grade = document.getElementById('grade').value;
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
 
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({
                 category: category,
+                grade: grade,
                 title: title,
                 content: content
             })

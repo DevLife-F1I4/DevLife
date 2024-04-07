@@ -2,6 +2,7 @@ package com.example.devlife.dto;
 
 import com.example.devlife.entity.Board;
 import com.example.devlife.entity.Category;
+import com.example.devlife.entity.Grade;
 import com.example.devlife.entity.User;
 import lombok.*;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class BoardResponseDto {
     private Long id;
     private Category category;
+    private Grade grade;
     private String title;
     private String content;
     private int hit;
@@ -27,6 +29,7 @@ public class BoardResponseDto {
     public BoardResponseDto(Board board) {
         this.id = board.getId();
         this.category = board.getCategory();
+        this.grade = board.getGrade();
         this.title = board.getTitle();
         this.content = board.getContent();
         this.hit = board.getHit();

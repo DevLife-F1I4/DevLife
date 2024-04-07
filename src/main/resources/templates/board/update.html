@@ -59,6 +59,12 @@
                         <option th:each="category : ${category}" th:value="${category}" th:text="${category.description}"></option>
                     </select>
                 </div>
+                <div class="grade">
+                    <label for="grade">열람등급</label>
+                    <select id="grade" name="grade" th:field="*{grade}">
+                        <option th:each="grade : ${grade}" th:value="${grade}" th:text="${grade.description}"></option>
+                    </select>
+                </div>
                 <div class="field-row-stacked">
                     <label for="title">제목</label>
                     <input id="title" type="text" th:value="${dto.getTitle()}" required>
