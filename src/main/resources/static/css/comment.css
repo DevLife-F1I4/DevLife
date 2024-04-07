@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'DungGeunMo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #c0c0c0;
+}
+
+aside {
+    width: 200px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    padding: 8px;
+    display: flex;
+    align-items: stretch;
+}
+
+aside .tree-view {
+    width: 100%;
+    /* TODO: Move scrollbar into the recessed region? */
+    overflow-y: scroll;
+}
+
+.main {
+	
+	margin-left: 220px;
+	width: calc(100% - 220px);
+}
+
+.window{
+    width: 80%;
+   	margin: 10px 10% 0 10%;
+}
+
+.status-bar-left{
+	width: 80%;
+}
+
+.comment-body{
+	padding-top: 10px;
+	padding-left: 10px;
+}
+.comment-control{
+	display: flex;
+}
+.comment-control button{
+	width: 50%;
+}
+textarea {
+    height: 100%;
+    width: 100%;
+   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.submit-comment{
+	height: 100%;
+    width: 100%;
+}
+.divide2{
+	height:50%;
+}

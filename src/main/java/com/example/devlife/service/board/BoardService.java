@@ -31,6 +31,7 @@ public class BoardService {
 
         Board result = Board.builder()
                 .category(newboardWriteRequestDto.getCategory())
+                .grade(newboardWriteRequestDto.getGrade())
                 .title(newboardWriteRequestDto.getTitle())
                 .content(newboardWriteRequestDto.getContent())
                 .user(user)
@@ -46,6 +47,7 @@ public class BoardService {
     public List<Board> findAllByCategory(Category category){
         return boardRepository.findByCategory(category);
     }
+
     public BoardResponseDto boardDetail(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         BoardResponseDto result = BoardResponseDto.builder()
@@ -56,7 +58,7 @@ public class BoardService {
 
     public Long boardUpdate(Long id, BoardWriteRequestDto boardWriteRequestDto) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
-        board.update(boardWriteRequestDto.getTitle(), boardWriteRequestDto.getContent());
+        board.update(boardWriteRequestDto);
         boardRepository.save(board);
 
         return board.getId();

@@ -4,12 +4,10 @@
 
 <head>
     <link rel="stylesheet" href="https://unpkg.com/98.css" />
-    <link rel="stylesheet" th:href="@{/css/signup.css}">
     <meta charset="UTF-8">
-    <title>로그인</title>
 </head>
 <body>
-
+	
     <aside>
         <ul class="tree-view">
             <li><a th:href="@{/main}" style="font-size: 20px; font-weight: bold">DevLife</a></li>
@@ -17,7 +15,6 @@
                 <a href="#components" >Category</a>
                 <ul>
                     <li><a th:href="@{/mypage}" sec:authorize="hasRole('USER')">마이페이지</a></li>
-                    <li><a th:href="@{/adminpage}" sec:authorize="hasRole('ADMIN')">관리자페이지</a></li>
                     <li><a th:href="@{/login}" sec:authorize="isAnonymous()">로그인</a></li>
                     <li><a th:href="@{/user/logout}" sec:authorize="isAuthenticated()">로그아웃</a></li>
                     <li><a th:href="@{/signup}" sec:authorize="isAnonymous()">회원가입</a></li>
@@ -30,7 +27,7 @@
                             <li><a th:href="@{/board/list/GOURMET}">고독한 개발자</a></li>
                         </ul>
                     </li>
-                    <li><a th:href="@{/board/write}" th:if="${account != null}">글쓰기</a></li>
+                    <li><a th:href="@{/board/write}" sec:authorize="isAuthenticated()">글쓰기</a></li>
                 </ul>
             </li>
             <li><a href="#issues-contributing-etc">Issues, Contributing, etc.</a></li>
@@ -38,24 +35,11 @@
     </aside>
 
     <main>
-        <h2> 로그인</h2>
-        <form class="login-form">
-            <div class="field-row-stacked">
-            <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
-                <label for="providerId">ID</label>
-                <input id="providerId" type="text" name="providerId"/>
-            </div>
-            <div class="field-row-stacked">
-                <label for="password">Password</label>
-                <input id="password" type="password" name="password"/>
-            </div>
-            <button class="login-btn">로그인</button>
-        </form>
-            <button class="signup-btn" onclick="location.href='/signup'">회원가입</button>
+		<div layout:fragment="comment"></div>
     </main>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script th:src="@{/js/login.js}"></script>
-
-
     <script th:src="@{/js/logout.js}"></script>
+	<script th:src="@{/js/comment.js}"></script>
 </body>
 </html>

@@ -18,8 +18,7 @@ public class AddCommentRequest {
 	private Long parentId;
 	private Long depth;
 	private Long sequence;
-	private User user;
-	private Board board;
+	
 
 
 	public Comment toEntity(User user, Board board) {

@@ -7,6 +7,7 @@ import com.example.devlife.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,6 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -46,11 +48,12 @@ public class SecurityConfig {
                 // 인증, 인가 설정
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/login", "/signup", "/main", "/",
-                                        "/css/**", "/js/**", "/board/list",
+                                        "/css/**", "/js/**", "/board/list/**", "/board/**",
                                         "/api/login", "/api/signup/**",
                                         "/swagger-ui/**", "/api-docs/swagger-config").permitAll() // 인증 없이 접근 허용
-                                .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN만 접근 가능
-                                .requestMatchers("/api/user/**").hasRole("USER")
+                                .requestMatchers("/admin/**", "/api/admin/**",
+                                		"/adminpage/**").hasRole("ADMIN") // ADMIN만 접근 가능
+                                .requestMatchers("/api/user/**").hasAnyRole("ADMIN", "USER")
                                 .anyRequest().authenticated())
 
                 // 로그인
