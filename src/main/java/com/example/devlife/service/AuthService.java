@@ -60,7 +60,7 @@ public class AuthService {
 
         // Access Token, Refresh Token 생성 및 Redis에 Refresh Token 저장
         AuthDto.TokenDto tokenDto = jwtTokenProvider.createToken(providerId, authentication);
-        //saveRefreshToken(provider, providerId, tokenDto.getRefreshToken());
+       // saveRefreshToken(provider, providerId, tokenDto.getRefreshToken());
         return tokenDto;
     }
 
@@ -149,7 +149,8 @@ public class AuthService {
         // 1. Access Token 가져옴
         String requestAccessToken = resolveToken(request);
 
-        // 2. Access Token에 담겨 있는 사용자 정보 가져옴
+        // 2. Access
+        // Token에 담겨 있는 사용자 정보 가져옴
         String principal = jwtTokenProvider.getAuthentication(requestAccessToken).getName();
 
         // 3. 해당 사용자의 refresh token이 redis에 있는지 확인 --> 있다면 Refresh Token 삭제

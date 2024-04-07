@@ -4,10 +4,14 @@ package com.example.devlife.controller;
 import com.example.devlife.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.security.Principal;
 
 
 @Slf4j
@@ -17,11 +21,14 @@ public class UserViewController {
 
     @GetMapping(value = {"/", "/main"})
     public String mainPage(@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account")
-                           User account, Model model){
-        if(account != null) {
+                           User account, Model model, @AuthenticationPrincipal Principal principal) {
+        if(principal!=null){
+            log.info("유저 인증 " + principal.getName());
+        }
+        if (account != null) {
+            log.info("유저 아이디 : " + account.getProviderId());
             model.addAttribute("account", account);
         }
-
         return "main";
     }
     @GetMapping("/login")

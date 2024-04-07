@@ -31,8 +31,8 @@ public class JwtTokenProvider implements InitializingBean {
     private final RedisService redisService;
     private static final String AUTHORITIES_KEY = "role";
     private static final String PROVIDER_ID_KEY = "providerId";
-    //private static final String url = "https://43.203.66.162:8080";
-    private static final String url = "https://localhost:8080";
+    private static final String url = "http://43.203.66.162:8080";
+    //private static final String url = "https://localhost:8080";
 
     @Value("${jwt.secret}")
     private String secretKey;

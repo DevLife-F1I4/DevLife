@@ -11,6 +11,13 @@ spring:
     restart:
       enabled: true
 
+  logging:
+    file:
+      path: /home/ec2-user/
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
