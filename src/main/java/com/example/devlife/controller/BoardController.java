@@ -105,19 +105,22 @@ public class BoardController {
     @DeleteMapping("/{id}")
     public String boardRemove(@PathVariable Long id, Model model,
                               @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
-        if(account != null) {
-            model.addAttribute("account", account);
-        }
+//        if(account != null) {
+//            model.addAttribute("account", account);
+//        }
 
         BoardResponseDto result = boardService.boardDetail(id);
 
-        if (Objects.equals(result.getUser().getProviderId(), account.getProviderId()) && (account.getRole() == Role.USER)) {
+        if (Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
             boardService.deleteBoard(id);
             return "redirect:/board/list";
-        }else{
+        }
+        else if(Objects.equals(account.getRole(), Role.ADMIN)){
+            boardService.deleteBoard(id);
+            return "redirect:/board/list";
+        }
+        else{
             return "board/YouShallNotPass";
         }
-
-
     }
 }
