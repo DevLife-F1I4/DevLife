@@ -31,6 +31,10 @@
 <img width="612" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/f6a87953-c6d7-41f5-89d4-37a924b33272">
 
 
+## 주요 화면
+<img width="1132" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/de22e1d6-c099-4057-b0bf-a933094f6ae6">
+<img width="1128" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/d13794a1-d93f-4b0d-ac62-64c5a7d5ed3c">
+
   
 ## 📍 주요 기능
 #### 로그인
