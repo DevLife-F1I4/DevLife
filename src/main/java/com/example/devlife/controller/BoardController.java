@@ -63,7 +63,9 @@ public class BoardController {
 		model.addAttribute("comments", comments);
 		if (user != null) {
 			model.addAttribute("account", user);
-		}
+		}else {
+            return "board/YouShallNotPass";
+        }
 
         if(user.getGrade().ordinal() < result.getGrade().ordinal() && (!Objects.equals(user.getProviderId(), result.getUser().getProviderId()))
                 && (user.getRole() == Role.USER)){
