@@ -15,7 +15,7 @@ function changeGrade(){
 		})
 	}).then(response=>{
 		if (response.ok){
-			alert('완료');
+			alert('등급 변경이 완료되었습니다.');
 			location.reload();
 		}
 	}).catch(error => console.error(error.message));
@@ -30,7 +30,7 @@ function withdraw(flag){
 		method: 'DELETE',
 	}).then(response=>{
 		if (response.ok){
-			alert('완료');
+			alert('탈퇴 처리가 완료되었습니다.');
 			location.reload();
 		}
 	}).catch(error => console.error(error.message));
