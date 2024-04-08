@@ -7,9 +7,9 @@ spring:
     url: ${POSTGRESQL_URL}
     username: ${POSTGRESQL_USERNAME}
     password: ${POSTGRESQL_PASSWORD}
-  devtools:
-    restart:
-      enabled: true
+  #devtools:
+   # restart:
+     # enabled: true
 
   logging:
     file:
@@ -30,8 +30,8 @@ spring:
       #naming:
         #implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    generate-ddl: true
-    open-in-view: false
+    #generate-ddl: true
+    #open-in-view: false
 
     data:
       redis:
