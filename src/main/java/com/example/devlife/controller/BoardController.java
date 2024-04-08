@@ -2,10 +2,7 @@ package com.example.devlife.controller;
 
 import com.example.devlife.dto.BoardResponseDto;
 import com.example.devlife.dto.BoardWriteRequestDto;
-import com.example.devlife.entity.Category;
-import com.example.devlife.entity.Comment;
-import com.example.devlife.entity.Grade;
-import com.example.devlife.entity.User;
+import com.example.devlife.entity.*;
 import com.example.devlife.repository.user.UserRepository;
 import com.example.devlife.service.board.BoardService;
 import com.example.devlife.service.comment.CommentService;
@@ -68,7 +65,8 @@ public class BoardController {
 			model.addAttribute("account", user);
 		}
 
-        if(user.getGrade().ordinal() < result.getGrade().ordinal() && (!Objects.equals(user.getProviderId(), result.getUser().getProviderId())) ) {
+        if(user.getGrade().ordinal() < result.getGrade().ordinal() && (!Objects.equals(user.getProviderId(), result.getUser().getProviderId()))
+                && (user.getRole() == Role.USER)){
             return "board/YouShallNotPass";
         }
         else{
@@ -81,7 +79,7 @@ public class BoardController {
     public String boardUpdateForm(@PathVariable Long id, Model model,
                                   @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
         BoardResponseDto result = boardService.boardDetail(id);
-        if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
+        if (!Objects.equals(result.getUser().getProviderId(), account.getProviderId())  && (account.getRole() == Role.USER)) {
             return "board/YouShallNotPass";
         }
 
@@ -108,19 +106,22 @@ public class BoardController {
     @DeleteMapping("/{id}")
     public String boardRemove(@PathVariable Long id, Model model,
                               @AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account) {
-        if(account != null) {
+        /*if(account != null) {
             model.addAttribute("account", account);
-        }
+        }*/
 
         BoardResponseDto result = boardService.boardDetail(id);
 
         if (Objects.equals(result.getUser().getProviderId(), account.getProviderId())) {
             boardService.deleteBoard(id);
             return "redirect:/board/list";
-        }else{
+        }
+        else if(Objects.equals(account.getRole(), Role.ADMIN)){
+            boardService.deleteBoard(id);
+            return "redirect:/board/list";
+        }
+        else{
             return "board/YouShallNotPass";
         }
-
-
     }
 }

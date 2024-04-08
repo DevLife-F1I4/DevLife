@@ -26,28 +26,22 @@ public class AdminController {
 
 
 	@DeleteMapping("/user/{providerId}/{flag}")
-	public ResponseEntity<Void> deleteUser(
-			@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account,
-			@PathVariable(value = "providerId") String providerId,
-			@PathVariable(value="flag") Boolean flag) {
+	public ResponseEntity<Void> deleteUser(@PathVariable(value = "providerId") String providerId,
+											@PathVariable(value="flag") Boolean flag) {
 		
 		adminService.deleteUser(providerId, flag);
 		return ResponseEntity.ok().body(null);
 	}
 
 	@GetMapping("/user/{providerId}")
-	public ResponseEntity<User> getUserInfo(
-			@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account,
-			@PathVariable(value = "providerId") String providerId){
+	public ResponseEntity<User> getUserInfo(@PathVariable(value = "providerId") String providerId){
 		User user = adminService.getUser(providerId);
 		return ResponseEntity.ok().body(user);
 	}
 
 	@PatchMapping("/user/{providerId}")
-	public ResponseEntity<User> updateUserGrade(
-			@AuthenticationPrincipal(expression = "#this == 'anonymousUser' ? null : account") User account,
-			@PathVariable(value = "providerId") String providerId, 
-			@RequestBody UpdateUserGradeRequest request){
+	public ResponseEntity<User> updateUserGrade(@PathVariable(value = "providerId") String providerId,
+												@RequestBody UpdateUserGradeRequest request){
 		User user = adminService.updateUserGrade(providerId, request);
 		return ResponseEntity.ok().body(user);
 	}

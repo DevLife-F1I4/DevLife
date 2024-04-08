@@ -56,11 +56,11 @@ public class Board {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "board")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     private List<Comment> commentList;
 
     public void update(BoardWriteRequestDto dto) {
