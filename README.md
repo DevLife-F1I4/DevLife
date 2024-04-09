@@ -34,6 +34,7 @@
 ## 주요 화면
 <img width="1132" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/de22e1d6-c099-4057-b0bf-a933094f6ae6">
 <img width="1128" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/81796258/d13794a1-d93f-4b0d-ac62-64c5a7d5ed3c">
+<img width="1130" alt="image" src="https://github.com/DevLife-F1I4/DevLife/assets/155498348/33b1e3a0-4efa-438a-beaf-13892f7d00de">
 
   
 ## 📍 주요 기능
